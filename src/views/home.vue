@@ -2,8 +2,8 @@
 import { ref, watch } from 'vue'
 import Logo from '@/assets/logo.png'
 import { useRoute, useRouter, RouterView } from 'vue-router'
-import { flatArray } from '@/utils/index.js'
-import { menus } from '@/mock/index.js'
+import { flatArray } from '@/utils'
+import { menus } from '@/mock'
 import { ArrowDown } from '@element-plus/icons-vue'
 
 const [route, router] = [useRoute(), useRouter()]
@@ -49,7 +49,7 @@ watch(route, () => {
       </div>
       <div class="flex items-center bg-green-600 rounded h-[36px] px-2 select-none">
         <el-dropdown>
-          <div class="p-2">
+          <div class="p-2 outline-none">
             <span class="text-white mr-2">admin</span>
             <el-icon class="text-white"><arrow-down /></el-icon>
           </div>

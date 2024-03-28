@@ -9,7 +9,7 @@ export const menus = [
     ]
   },
   {
-    name: 'other',
+    name: '其他',
     link: 'other',
     children: [
       { name: '拓扑图', link: 'other/g6' }

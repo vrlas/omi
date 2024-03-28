@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onBeforeMount } from 'vue'
-import { exportTable, readExcel } from '@/utils/tool.js'
+import { exportTable, readExcel } from '@/utils/tool'
 import { driver } from 'driver.js'
 import 'driver.js/dist/driver.css'
 // import { useRoute, useRouter } from 'vue-router'
@@ -8,9 +8,8 @@ import axios from 'axios'
 
 // const [route, router] = [useRoute(), useRouter()]
 const fileRef = ref(null)
-const show = ref(false)
 const loading = ref(false)
-const head = { name: '项目', desc: '描述', 语言: 'language', stars: 'star数', forks: 'fork数' }
+const head = { name: '项目', desc: '描述', language: '语言', stars: 'star数', forks: 'fork数' }
 const data = ref([])
 const props = defineProps({
   name: { type: String, default: '表格.xlsx' },
@@ -31,7 +30,6 @@ const trigger = () => {
 }
 const parseTable = (e,) => {
   readExcel(e.target.files[0], (arr) => {
-    show.value = true
     alert(JSON.stringify(arr))
   })
 }
@@ -61,14 +59,16 @@ onBeforeMount(() => {
       const descNode = item.querySelector('p.color-fg-muted')
       const languageNode = item.querySelector('span[itemprop="programmingLanguage"]')
       const starsNode = item.querySelectorAll('.Link--muted')
+      const str = `${authorNode?.textContent}${projectNode?.textContent}`.replace(/\s+/g, '')
       data.value.push({
         id: ++id,
-        name: `${authorNode?.textContent?.replaceAll(' ', '')}${projectNode?.textContent?.trim()}`,
+        name: str,
         desc: descNode?.textContent?.trim(),
         language: languageNode?.textContent?.trim(),
-        stars: starsNode[0].lastChild?.textContent,
-        forks: starsNode[1].lastChild?.textContent
+        stars: starsNode[0].lastChild?.textContent?.replace(/\s+/g, ''),
+        forks: starsNode[1].lastChild?.textContent?.replace(/\s+/g, '')
       })
+      console.log(str)
     })
   }).finally(() => loading.value = false)
 })

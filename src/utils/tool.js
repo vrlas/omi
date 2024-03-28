@@ -9,6 +9,12 @@ import FileSaver from 'file-saver'
  * @param { enable: 是否启用表格样式 }
  */
 const exportTable = (data, title = '表格.xlsx', config = { enable: false }) => {
+  const keys = Object.keys(data[0])
+  data = data.map(item => {
+    const ob = {}
+    keys.forEach(k => ob[k] = item[k] || '')
+    return ob
+  })
   const sheet = XLSX.utils.json_to_sheet(data, { skipHeader: true })
   let blob
   if (config.enable) {
@@ -78,6 +84,7 @@ const readExcel = (file, cb) => {
     const k = sheet['!ref'].match(/^([a-z]+)([0-9]+):([a-z]+)([0-9]+)$/i)
     delete sheet['!ref']
     const v = Object.values(sheet)
+    console.log(v)
     const n = v.length / +k[k.length - 1]
     let count = 0, arr = [], temp = []
     for (let i = 0; i < v.length; i++) {
