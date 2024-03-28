@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --light-color:  rgb(247, 248, 250);
+}
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.t-center {
+  @apply flex justify-center items-center;
+}
+.t-gray {
+  background-color: var(--light-color);
+}
