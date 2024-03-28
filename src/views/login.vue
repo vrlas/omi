@@ -35,7 +35,7 @@ const login = () => {
       </div>
       <div class="min-w-[600px] p-20">
         <p class="text-slate-600">欢迎使用</p>
-        <p class="text-[32px] text-blue-400 font-bold">OMI组件库</p>
+        <p class="text-[32px] text-blue-400 font-bold">Omi组件库</p>
         <div class="flex flex-col mt-8">
           <p class="mb-1 text-sm">用户名：</p>
           <el-input v-model="user.username" style="height: 40px" placeholder="请输入" />

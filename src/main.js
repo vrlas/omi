@@ -8,6 +8,7 @@ import Vue3Lottie from 'vue3-lottie'
 
 import App from './App.vue'
 import router from './router'
+import { useRouter } from 'vue-router'
 
 createApp(App)
   .use(createPinia())
