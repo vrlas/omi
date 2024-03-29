@@ -52,7 +52,8 @@ onMounted(render)
 </script>
 
 <template>
-  <div className="card bg-white mt-2 rounded overflow-y-scroll" style="height: calc(100vh - 160px)">
+  <!--  style="height: calc(100vh - 160px)" -->
+  <div className="card bg-white mt-2 rounded overflow-y-scroll">
     <div className="h-[1600px]" ref="subwayRef" style="zoom: 0.84"></div>
   </div>
 </template>

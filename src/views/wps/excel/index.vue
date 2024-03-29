@@ -3,6 +3,11 @@ import { ref, onBeforeMount } from 'vue'
 import { exportTable, readExcel } from '@/utils/tool'
 import { driver } from 'driver.js'
 import 'driver.js/dist/driver.css'
+// import {
+//   Edit,
+//   View,
+//   Delete
+// } from '@element-plus/icons-vue'
 // import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 
@@ -39,7 +44,7 @@ const guide = () => {
     steps: [
       { element: '.guide-1', popover: { description: '下载表格文件' } },
       { element: '.guide-2', popover: { description: '解析本地表格并控制台输出' } },
-      { element: '.guide-3', popover: { description: '表格数据' } }
+      { element: '.guide-3', popover: { description: 'github本周热门项目' } }
     ],
     prevBtnText: '上一步',
     nextBtnText: '下一步',
@@ -75,49 +80,53 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <div class="card p-4 bg-white">
-    <!-- <el-button class="guide-1 mr-2" type="primary" @click="router.push(`${route.path}/edit`)">
-      添加数据
-    </el-button> -->
-    <el-button class="guide-1 mr-2" type="primary" @click="generateTable">
-      下载表格
-    </el-button>
-    <el-button class="guide-2 mr-2" type="primary" @click="trigger">
-      解析表格
-    </el-button>
-    <el-button class="guide-2" @click="guide">
-      启用引导
-    </el-button>
-    <input ref="fileRef" type="file" hidden @change="parseTable" />
-  </div>
-  <div class="card mt-2 p-4 bg-white">
-    <el-table v-loading="loading" size="large" :height="650" :data="data" stripe>
-      <el-table-column label="项目">
-        <template #default="{ row }">
-          <a :href="`https://github.com/${row.name}`" target="_blank"class="text-blue-500 hover:text-blue-800">{{ row.author }}{{ row.name }}</a>
-        </template>
-      </el-table-column>
-      <el-table-column label="描述">
-        <template #default="{ row }">
-          <span class="t-omit">{{ row.desc }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="语言">
-        <template #default="{ row }">
-          <el-tag>{{ row.language || 'markdown' }}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column prop="stars" label="star数" />
-      <el-table-column prop="forks" label="fork数" />
-      <!-- <el-table-column fixed="right" width="200" label="操作">
-        <template #default="{ row }">
-          <el-button-group>
-            <el-button type="primary" :icon="Edit" @click="router.push(`${route.path}/edit?id=${row.id}`)" />
-            <el-button type="primary" :icon="View" @click="router.push(`${route.path}/info?id=${row.id}`)" />
-            <el-button type="danger" :icon="Delete" />
-          </el-button-group>
-        </template>
-      </el-table-column> -->
-    </el-table>
+  <div class="flex flex-col h-full overflow-hidden">
+    <div class="t-card">
+      <!-- <el-button class="guide-1" type="primary" @click="router.push(`${route.path}/edit`)">
+        添加数据
+      </el-button> -->
+      <el-button class="guide-1" type="primary" @click="generateTable">
+        下载表格
+      </el-button>
+      <el-button class="guide-2" type="primary" @click="trigger">
+        解析表格
+      </el-button>
+      <el-button class="guide-2" @click="guide">
+        启用引导
+      </el-button>
+      <input ref="fileRef" type="file" hidden @change="parseTable" />
+    </div>
+    <div class="t-card mt-2 flex-1">
+      <el-table v-loading="loading" max-height="650" size="large" :data="data" stripe>
+        <el-table-column label="项目">
+          <template #default="{ row }">
+            <a :href="`https://github.com/${row.name}`" target="_blank"class="text-blue-500 hover:text-blue-800">{{ row.author }}{{ row.name }}</a>
+          </template>
+        </el-table-column>
+        <el-table-column label="描述">
+          <template #default="{ row }">
+            <el-tooltip v-if="row.desc" :content="row.desc" placement="bottom" effect="light">
+              <span class="t-omit">{{ row.desc }}</span>
+            </el-tooltip>
+          </template>
+        </el-table-column>
+        <el-table-column label="语言">
+          <template #default="{ row }">
+            <el-tag>{{ row.language || 'markdown' }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column prop="stars" label="star数" />
+        <el-table-column prop="forks" label="fork数" />
+        <!-- <el-table-column fixed="right" width="200" label="操作">
+          <template #default="{ row }">
+            <el-button-group>
+              <el-button type="primary" :icon="Edit" @click="router.push(`${route.path}/edit?id=${row.id}`)" />
+              <el-button type="primary" :icon="View" @click="router.push(`${route.path}/info?id=${row.id}`)" />
+              <el-button type="danger" :icon="Delete" />
+            </el-button-group>
+          </template>
+        </el-table-column> -->
+      </el-table>
+    </div>
   </div>
 </template>

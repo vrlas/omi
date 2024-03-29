@@ -41,13 +41,13 @@ watch(route, () => {
 </script>
 
 <template>
-  <div class="w-full h-screen flex flex-col">
-    <div class="w-screen !h-[80px] flex justify-between items-center select-none px-2">
+  <div class="w-screen h-screen flex flex-col">
+    <div class="h-[80px] flex justify-between items-center select-none px-2">
       <div class="flex items-center">
         <img class="cursor-pointer" :src="Logo" />
-        <span class="ml-1 text-[24px] text-slate-600 font-bold">Omi组件库</span>
+        <span class="ml-1 text-[24px] text-slate-600 font-bold">Omi物料库</span>
       </div>
-      <div class="flex items-center bg-green-600 rounded h-[36px] px-2 select-none">
+      <div class="flex items-center bg-green-600 rounded h-[36px] px-2">
         <el-dropdown>
           <div class="p-2 outline-none">
             <span class="text-white mr-2">admin</span>
@@ -61,7 +61,7 @@ watch(route, () => {
         </el-dropdown>
       </div>
     </div>
-    <div class="w-screen flex flex-1 shadow-inner">
+    <div class="flex flex-1 shadow-inner">
       <div class="w-[280px] select-none">
         <div class="w-[260px] ml-[10px] mt-2 bg-white">
           <el-menu class="border-none mt-1" style="height: 200px;">
@@ -73,8 +73,8 @@ watch(route, () => {
         </div>
       </div>
       <div class="flex-1 t-gray p-2">
-        <div class="h-full">
-          <div v-if="links.length" class="card p-4 mb-2 bg-white">
+        <div class="h-full flex flex-col gap-2">
+          <div v-if="links.length" class="t-card">
             <el-breadcrumb separator="/">
               <template v-for="{ name, link }, i in links" :key="i">
                 <el-breadcrumb-item v-if="i === 0 || i === links.length - 1">
@@ -84,7 +84,9 @@ watch(route, () => {
               </template>
             </el-breadcrumb>
           </div>
-          <RouterView />
+          <div class="flex-1">
+            <RouterView />
+          </div>
         </div>
       </div>
     </div>
