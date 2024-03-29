@@ -37,7 +37,7 @@ const initMap = async () => {
   flyTo()
   draw('polygon')
   addPopup()
-  setTimeout(loadRoad, 5000)
+  setTimeout(loadRoad, 15000)
 }
 const flyTo = () => {
   const { lng, lat, pitch, heading, height } = lnglat
