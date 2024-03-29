@@ -30,28 +30,46 @@ const login = () => {
 <template>
   <div class="w-screen h-screen bg-white t-center">
     <!-- 卡片 -->
-    <div class="min-w-[1200px] min-h-[700px] bg-white flex rounded-r-lg t-shadow cursor:shadow-lg">
-      <div class="flex-1 bg-blue-400 rounded-l-lg">
+    <div class="container w-[1200px] h-[700px] bg-white flex rounded-r-lg t-shadow cursor:shadow-lg">
+      <div class="left flex-1 bg-blue-400 rounded-l-lg">
         <Icon width="600px" />
       </div>
-      <div class="min-w-[600px] p-20">
+      <div class="right w-[600px] p-20">
         <p class="text-slate-600 text-[20px]">欢迎使用</p>
         <div class="flex gap-1 mt-4">
           <img class="cursor-pointer" :src="Logo" />
           <p class="text-[32px] text-slate-600 font-bold">Omi物料库</p>
         </div>
-        <div class="flex flex-col mt-20">
+        <div class="row flex flex-col mt-20">
           <p class="mb-1 text-sm">用户名：</p>
-          <el-input v-model="user.username" style="height: 40px" placeholder="请输入" />
+          <el-input v-model="user.username" style="height: 40px;width: 100%;" placeholder="请输入" />
         </div>
-        <div class="flex flex-col mt-8">
+        <div class="row flex flex-col mt-8">
           <p class="mb-1 text-sm">密码：</p>
           <el-input v-model="user.password" type="password" style="height: 40px" placeholder="请输入" :show-password="isShow" />
         </div>
-        <div class="w-full mt-8">
+        <div class="row mt-8">
           <el-button type="primary" style="width: 100%;padding: 20px;cursor:pointer" :loading="loading" @click="login">登录</el-button>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+// 手机端响应式
+.is-mobile {
+  .container {
+    @apply w-screen h-screen;
+    .left {
+      @apply hidden;
+    }
+    .right {
+      @apply w-screen h-screen mx-auto flex flex-col items-center;
+      .row {
+        @apply w-screen px-10;
+      }
+    }
+  }
+}
+</style>

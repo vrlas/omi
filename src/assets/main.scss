@@ -46,6 +46,11 @@ body {
   border: none !important;
 }
 
+// cesium地图滤镜,效果更佳
+.cesium-widget>canvas {
+  filter: contrast(150%);
+}
+
 /* 滚动条美化 */
 ::-webkit-scrollbar {
   width: 20px;

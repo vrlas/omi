@@ -14,7 +14,8 @@ import {
   HorizontalOrigin,
   VerticalOrigin,
   GeoJsonDataSource,
-  ImageMaterialProperty
+  ImageMaterialProperty,
+  EventHelper
 } from 'cesium'
 import 'cesium/Build/Cesium/Widgets/widgets.css'
 import { cesiumOption } from '@/utils/map'
@@ -28,20 +29,27 @@ const [mapRef, divGraphicRef] = [ref(null), ref(null)]
 let viewer
 const initMap = async () => {
   Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmNjJjMzY0OS1hZGQxLTRiZmYtYWYwNS03NmIyM2MwMDgwZDAiLCJpZCI6MTIzMTgsInNjb3BlcyI6WyJhc3IiLCJnYyJdLCJpYXQiOjE1NjA4NDQ3Mjd9.OLTL_rs2gAi2R9zoztBHcJPDHnVl2Q7OZxRtZhoCeZE'
-  console.log(cesiumOption)
   viewer = new Viewer(mapRef.value, {...cesiumOption, terrainProvider: await createWorldTerrainAsync()})
   viewer.cesiumWidget.creditContainer.style.display = 'none' // 隐藏logo版权
   viewer.scene.globe.depthTestAgainstTerrain = true
   viewer.scene.debugShowFramesPerSecond = true // 显示帧率
-  movePosition()
-  flyTo()
-  draw('polygon')
-  addPopup()
-  setTimeout(loadRoad, 15000)
+  const helper = new EventHelper()
+  helper.add(viewer.scene.globe.tileLoadProgressEvent, e => {
+    if (e === 0) {
+      setTimeout(() => {
+        movePosition()
+        flyTo()
+        draw('polygon')
+        addPopup()
+        loadRoad()
+      }, 2000)
+      helper.removeAll()
+    }
+  })
 }
 const flyTo = () => {
   const { lng, lat, pitch, heading, height } = lnglat
-  viewer.camera.setView({
+  viewer.camera.flyTo({
     destination: Cartesian3.fromDegrees(lng, lat, height),
     orientation: {
       heading: CMath.toRadians(heading),
@@ -119,11 +127,12 @@ const loadRoad = () => {
   promise.then((datasource) => {
     viewer.dataSources.add(datasource)
     const entities = datasource.entities.values
-    const material = new ImageMaterialProperty({
+    let material = new ImageMaterialProperty({
       color: Color.SKYBLUE.withAlpha(0.5),
       image: '/house.jpg'
     })
-    entities.forEach(entity => {
+    entities.length = 400
+    entities.forEach((entity, i) => {
       entity.polygon.extrudedHeight = Math.round(Math.random() * 800) + 400
       entity.polygon.outline = false
       entity.polygon.material = material

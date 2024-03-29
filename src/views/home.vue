@@ -80,10 +80,10 @@ watch(route, () => {
         </div>
       </div>
     </div>
-    <div class="flex shadow-inner" style="height: calc(100vh - 80px)">
-      <div class="w-[280px] select-none">
+    <div class="t-container flex shadow-inner" style="height: calc(100vh - 80px)">
+      <div class="left w-[280px] select-none">
         <div class="w-[260px] ml-[10px] mt-2 bg-white">
-          <el-menu router :default-active="route.path.slice(1)" class="border-none mt-1" style="height: 200px;">
+          <el-menu router :default-active="route.path.slice(1)" class="border-none mt-1 menus" style="height: 200px;">
             <el-sub-menu v-for="item, i in menus" :key="i" :index="item.link">
               <template #title>{{ item.name }}</template>
               <el-menu-item v-for="{ name, link },j in item.children" :key="`${i}-${j}`" :index="link" @click="router.push(`/${link}`)">{{ name }}</el-menu-item>
@@ -91,7 +91,7 @@ watch(route, () => {
           </el-menu>
         </div>
       </div>
-      <div class="t-gray box-content flex flex-col w-full p-2" style="height: calc(100% - 16px)">
+      <div class="right t-gray box-content flex flex-col p-2 w-full" style="height: calc(100% - 16px)">
         <div class="h-full">
           <div v-if="links.length" class="t-card flex items-center mb-2">
             <el-breadcrumb separator="/">
@@ -114,5 +114,22 @@ watch(route, () => {
 <style lang="scss" scoped>
 .el-menu-item.is-active {
   @apply bg-blue-400 text-white box-content px-4;
+}
+
+// 手机端响应式
+.is-mobile {
+  .t-container {
+    @apply flex flex-col overflow-hidden;
+    .left {
+      @apply w-full mb-2;
+      .menus {
+        width: calc(100vw - 10px);
+        @apply overflow-auto;
+      }
+    }
+    .right {
+      // display: 
+    }
+  }
 }
 </style>

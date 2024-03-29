@@ -9,6 +9,8 @@ import Vue3Lottie from 'vue3-lottie'
 import App from './App.vue'
 import router from './router'
 import Github from '@/assets/svg/github.vue'
+const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent)
+isMobile && document.body.classList.add('is-mobile')
 
 createApp(App)
   .component('source-code', Github)
