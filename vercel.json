@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/trending",
+      "destination": "https://github.com/trending?since=monthly"
+    }
+  ]
+}
