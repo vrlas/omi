@@ -84,7 +84,6 @@ const readExcel = (file, cb) => {
     const k = sheet['!ref'].match(/^([a-z]+)([0-9]+):([a-z]+)([0-9]+)$/i)
     delete sheet['!ref']
     const v = Object.values(sheet)
-    console.log(v)
     const n = v.length / +k[k.length - 1]
     let count = 0, arr = [], temp = []
     for (let i = 0; i < v.length; i++) {

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --light-color:  rgb(247, 248, 250);
+  --light-color:  rgb(249, 249, 253);
 }
 
 @layer base {
@@ -23,8 +23,19 @@
   }
   /* 卡片样式统一 */
   .t-card {
-    @apply p-4 bg-white;
+    @apply relative p-4 bg-white;
   }
+  .t-shadow {
+    box-shadow: 0 0 3px rgb(0 0 0 / 0.1);
+  }
+}
+/* 地图div graphic */
+.t-divGraphic {
+  width: 285px;
+  height: 192px;
+  background-image: url('/water.png');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 body {
   overflow: hidden;
@@ -32,13 +43,17 @@ body {
 }
 
 /* 避免loading遮住表头(loading为1000) */
-.el-table__header-wrapper {
+/* .el-table__header-wrapper {
   z-index: 10001;
-}
+} */
 
 /* .el-table--scrollable-y .el-table__body-wrapper {
   overflow-y: auto;
 } */
+
+.leaflet-touch.leaflet-bar {
+  border: none !important;
+}
 
 /* 滚动条美化 */
 ::-webkit-scrollbar {

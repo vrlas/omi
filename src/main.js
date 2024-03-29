@@ -8,9 +8,10 @@ import Vue3Lottie from 'vue3-lottie'
 
 import App from './App.vue'
 import router from './router'
-import { useRouter } from 'vue-router'
+import Github from '@/assets/svg/github.vue'
 
 createApp(App)
+  .component('source-code', Github)
   .use(createPinia())
   .use(router)
   .use(Vue3Lottie)

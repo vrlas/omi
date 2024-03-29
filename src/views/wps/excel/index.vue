@@ -73,7 +73,6 @@ onBeforeMount(() => {
         stars: starsNode[0].lastChild?.textContent?.replace(/\s+/g, ''),
         forks: starsNode[1].lastChild?.textContent?.replace(/\s+/g, '')
       })
-      console.log(str)
     })
   }).finally(() => loading.value = false)
 })
@@ -97,7 +96,7 @@ onBeforeMount(() => {
       <input ref="fileRef" type="file" hidden @change="parseTable" />
     </div>
     <div class="t-card mt-2 flex-1">
-      <el-table v-loading="loading" max-height="650" size="large" :data="data" stripe>
+      <el-table v-loading="loading" height="650" size="large" :data="data" stripe>
         <el-table-column label="项目">
           <template #default="{ row }">
             <a :href="`https://github.com/${row.name}`" target="_blank"class="text-blue-500 hover:text-blue-800">{{ row.author }}{{ row.name }}</a>

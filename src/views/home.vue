@@ -3,26 +3,29 @@ import { ref, watch } from 'vue'
 import Logo from '@/assets/logo.png'
 import { useRoute, useRouter, RouterView } from 'vue-router'
 import { flatArray } from '@/utils'
-import { menus } from '@/mock'
-import { ArrowDown } from '@element-plus/icons-vue'
+import { menus, mockList } from '@/mock'
+import { ArrowDown, ChatLineSquare } from '@element-plus/icons-vue'
 
 const [route, router] = [useRoute(), useRouter()]
 const map = new Map([['edit', '编辑'], ['info', '详情']])
 const links = ref([])
 
+const currentCode = ref('')
 const toLogin = () => {
   localStorage.clear()
   router.push('/login')
 }
 
 watch(route, () => {
+  // 路由改变初始化数据
+  currentCode.value = ''
   links.value.length = 0
   const stack = route.path.slice(1).split('/')
   // 首位地址(避免多轮筛选)
   const find = menus.find(item => item.link === stack[0])
   if (!find) return
   const match = flatArray([find])
-  let n = 0
+  let n = 0, bool = true
   let real
   while(match && stack.length) {
     const pop = stack.pop()
@@ -32,8 +35,12 @@ watch(route, () => {
     } else {
       const str = stack.join('/')
       const handleStr = str ? `${str}/${pop}` : pop
-      const { name, link } = match.find(x => x.link === handleStr)
-      real = { name, link }
+      const { name, link, code } = match.find(x => x.link === handleStr)
+      if (bool && code && `/${link}` === route.path) {
+        currentCode.value = code
+        bool = false
+      }
+      real = { name, link, code }
     }
     links.value.unshift(real)
   }
@@ -47,24 +54,36 @@ watch(route, () => {
         <img class="cursor-pointer" :src="Logo" />
         <span class="ml-1 text-[24px] text-slate-600 font-bold">Omi物料库</span>
       </div>
-      <div class="flex items-center bg-green-600 rounded h-[36px] px-2">
-        <el-dropdown>
-          <div class="p-2 outline-none">
-            <span class="text-white mr-2">admin</span>
-            <el-icon class="text-white"><arrow-down /></el-icon>
-          </div>
+      <div class="flex items-center h-[36px] px-2">
+        <el-dropdown trigger="click">
+          <el-badge :value="mockList.length" class="mr-6 flex items-center cursor-pointer font-bold text-blue-500 hover:text-blue-600">
+            <el-icon :size="20"><ChatLineSquare /></el-icon>
+          </el-badge>
           <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item @click="toLogin()">退出登录</el-dropdown-item>
-            </el-dropdown-menu>
+            <div class="max-h-[140px] text-slate-600 cursor-pointer">
+              <div v-for="item,i in mockList" :key="i" class="px-4 py-2 hover:bg-blue-200 hover:text-white">{{item}}</div>
+            </div>
           </template>
         </el-dropdown>
+        <div class="bg-blue-400 rounded">
+          <el-dropdown>
+            <div class="p-2 outline-none">
+              <span class="text-white mr-2">admin</span>
+              <el-icon class="text-white"><arrow-down /></el-icon>
+            </div>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item @click="toLogin()">退出登录</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+        </div>
       </div>
     </div>
     <div class="flex flex-1 shadow-inner">
       <div class="w-[280px] select-none">
         <div class="w-[260px] ml-[10px] mt-2 bg-white">
-          <el-menu class="border-none mt-1" style="height: 200px;">
+          <el-menu router :default-active="route.path.slice(1)" class="border-none mt-1" style="height: 200px;">
             <el-sub-menu v-for="item, i in menus" :key="i" :index="item.link">
               <template #title>{{ item.name }}</template>
               <el-menu-item v-for="{ name, link },j in item.children" :key="`${i}-${j}`" :index="link" @click="router.push(`/${link}`)">{{ name }}</el-menu-item>
@@ -74,15 +93,16 @@ watch(route, () => {
       </div>
       <div class="flex-1 t-gray p-2">
         <div class="h-full flex flex-col gap-2">
-          <div v-if="links.length" class="t-card">
+          <div v-if="links.length" class="t-card flex items-center">
             <el-breadcrumb separator="/">
-              <template v-for="{ name, link }, i in links" :key="i">
+              <template v-for="{ name, link, code }, i in links" :key="i">
                 <el-breadcrumb-item v-if="i === 0 || i === links.length - 1">
                   <span class="cursor-not-allowed">{{ name }}</span>
                 </el-breadcrumb-item>
                 <el-breadcrumb-item v-else :to="{ path: `/${link}` }">{{ name }}</el-breadcrumb-item>
               </template>
             </el-breadcrumb>
+            <source-code v-if="currentCode" :code="currentCode" />
           </div>
           <div class="flex-1">
             <RouterView />
@@ -92,3 +112,9 @@ watch(route, () => {
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.el-menu-item.is-active {
+  @apply bg-blue-400 text-white box-content px-4;
+}
+</style>
