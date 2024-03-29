@@ -12,12 +12,15 @@ import {
   HeightReference,
   Ion,
   HorizontalOrigin,
-  VerticalOrigin
+  VerticalOrigin,
+  GeoJsonDataSource,
+  ImageMaterialProperty
 } from 'cesium'
 import 'cesium/Build/Cesium/Widgets/widgets.css'
 import { cesiumOption } from '@/utils/map'
 import { ref, onMounted } from 'vue'
 import board from './board.vue'
+import roadJSON from './road.json'
 
 const lnglat = { lng: 104.341738, lat: 30.593555, pitch: -10, heading: 280, height: 1000 }
 const position = ref({ ...lnglat })
@@ -34,6 +37,7 @@ const initMap = async () => {
   flyTo()
   draw('polygon')
   addPopup()
+  setTimeout(loadRoad, 5000)
 }
 const flyTo = () => {
   const { lng, lat, pitch, heading, height } = lnglat
@@ -107,17 +111,37 @@ const movePosition = () => {
   }, ScreenSpaceEventType.MOUSE_MOVE)
 }
 
+// 加载道路
+const loadRoad = () => {
+  const promise = GeoJsonDataSource.load(roadJSON, {
+    clampToGround: true
+  })
+  promise.then((datasource) => {
+    viewer.dataSources.add(datasource)
+    const entities = datasource.entities.values
+    const material = new ImageMaterialProperty({
+      color: Color.SKYBLUE.withAlpha(0.5),
+      image: '/house.jpg'
+    })
+    entities.forEach(entity => {
+      entity.polygon.extrudedHeight = Math.round(Math.random() * 800) + 400
+      entity.polygon.outline = false
+      entity.polygon.material = material
+    })
+  })
+}
+
 onMounted(initMap)
 </script>
 
 <template>
-  <div className="w-full h-full overflow-hidden relative" ref="mapRef">
-    <div className="absolute -z-10 t-divGraphic" ref="divGraphicRef">
-      <div className="absolute top-2 left-[128px] text-white font-bold text-sm">1号观景点</div>
-      <div className="absolute top-8 left-12 w-[140px] h-[120px] text-white text text-sm flex flex-col justify-evenly">
-        <div>经度: <span className="badge badge-primary badge-sm ml-3">104.325891</span></div>
-        <div>纬度: <span className="badge badge-secondary badge-sm ml-3">30.594535</span></div>
-        <div>高程: <span className="badge badge-accent badge-sm ml-3 text-white">42.84m</span></div>
+  <div class="w-full h-full overflow-hidden relative" ref="mapRef">
+    <div class="absolute -z-10 t-divGraphic" ref="divGraphicRef">
+      <div class="absolute top-2 left-[128px] text-white font-bold text-sm">1号观景点</div>
+      <div class="absolute top-8 left-12 w-[140px] h-[120px] text-white text text-sm flex flex-col justify-evenly">
+        <div>经度: <el-tag class="ml-2" type="primary" size="small">104.325891</el-tag></div>
+        <div>纬度: <el-tag class="ml-2" type="primary" size="small">30.594535</el-tag></div>
+        <div>高程: <el-tag class="ml-2" type="primary" size="small">42.84m</el-tag></div>
       </div>
     </div>
     <board :position="position" />

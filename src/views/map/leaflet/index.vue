@@ -54,18 +54,18 @@ const addLayer = () => {
   }).addTo(map)
 }
 
-const addCurrent = () => {
-  navigator.geolocation?.getCurrentPosition(position => {
-    const { coords: { latitude: lat, longitude: lng } } = position
-    L.marker(new L.LatLng(lat, lng), {
-      icon: L.divIcon({
-        html: '<div class="wave-circle hover-circle"><div class="pulse"></div></div>',
-        iconSize: [96, 96],
-        className: 'marker-wrapper'
-      })
-    }).addTo(map)
-  })
-}
+// const addCurrent = () => {
+//   navigator.geolocation?.getCurrentPosition(position => {
+//     const { coords: { latitude: lat, longitude: lng } } = position
+//     L.marker(new L.LatLng(lat, lng), {
+//       icon: L.divIcon({
+//         html: '<div class="wave-circle hover-circle"><div class="pulse"></div></div>',
+//         iconSize: [96, 96],
+//         className: 'marker-wrapper'
+//       })
+//     }).addTo(map)
+//   })
+// }
 
 const initMap = async () => {
   AMap = await AMapLoader.load({
@@ -81,7 +81,7 @@ const initMap = async () => {
   addStations()
   addListener()
   addLayer()
-  addCurrent()
+  // addCurrent()
 }
 
 onMounted(initMap)

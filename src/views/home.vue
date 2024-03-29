@@ -95,7 +95,7 @@ watch(route, () => {
         <div class="h-full">
           <div v-if="links.length" class="t-card flex items-center mb-2">
             <el-breadcrumb separator="/">
-              <template v-for="{ name, link, code }, i in links" :key="i">
+              <template v-for="{ name, link }, i in links" :key="i">
                 <el-breadcrumb-item v-if="i === 0 || i === links.length - 1">
                   <span class="cursor-not-allowed">{{ name }}</span>
                 </el-breadcrumb-item>
