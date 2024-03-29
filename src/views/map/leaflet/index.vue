@@ -32,7 +32,6 @@ const addStations = () => {
           })
           marker.bindPopup(name).openPopup()
           markers.addLayer(marker)
-          console.log(markers)
         })
         map.addLayer(markers)
       }
@@ -89,8 +88,5 @@ onMounted(initMap)
 </script>
 
 <template>
-  <!-- <div class="relative h-full"> -->
-    <div id="leaflet-map" className="w-full h-full"></div>1
-    <!-- <el-input class="w-[200px]" size="small" placeholder="起点" /> -->
-  <!-- </div> -->
+  <div id="leaflet-map" className="w-full h-full"></div>
 </template>

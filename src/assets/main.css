@@ -42,15 +42,6 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* 避免loading遮住表头(loading为1000) */
-/* .el-table__header-wrapper {
-  z-index: 10001;
-} */
-
-/* .el-table--scrollable-y .el-table__body-wrapper {
-  overflow-y: auto;
-} */
-
 .leaflet-touch.leaflet-bar {
   border: none !important;
 }

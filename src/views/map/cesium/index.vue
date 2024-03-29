@@ -111,7 +111,7 @@ onMounted(initMap)
 </script>
 
 <template>
-  <div className="w-full h-[770px] overflow-hidden relative" ref="mapRef">
+  <div className="w-full h-full overflow-hidden relative" ref="mapRef">
     <div className="absolute -z-10 t-divGraphic" ref="divGraphicRef">
       <div className="absolute top-2 left-[128px] text-white font-bold text-sm">1号观景点</div>
       <div className="absolute top-8 left-12 w-[140px] h-[120px] text-white text text-sm flex flex-col justify-evenly">

@@ -80,7 +80,7 @@ watch(route, () => {
         </div>
       </div>
     </div>
-    <div class="flex flex-1 shadow-inner">
+    <div class="flex shadow-inner" style="height: calc(100vh - 80px)">
       <div class="w-[280px] select-none">
         <div class="w-[260px] ml-[10px] mt-2 bg-white">
           <el-menu router :default-active="route.path.slice(1)" class="border-none mt-1" style="height: 200px;">
@@ -91,9 +91,9 @@ watch(route, () => {
           </el-menu>
         </div>
       </div>
-      <div class="flex-1 t-gray p-2">
-        <div class="h-full flex flex-col gap-2">
-          <div v-if="links.length" class="t-card flex items-center">
+      <div class="t-gray box-content flex flex-col w-full p-2" style="height: calc(100% - 16px)">
+        <div class="h-full">
+          <div v-if="links.length" class="t-card flex items-center mb-2">
             <el-breadcrumb separator="/">
               <template v-for="{ name, link, code }, i in links" :key="i">
                 <el-breadcrumb-item v-if="i === 0 || i === links.length - 1">
@@ -104,9 +104,7 @@ watch(route, () => {
             </el-breadcrumb>
             <source-code v-if="currentCode" :code="currentCode" />
           </div>
-          <div class="flex-1">
-            <RouterView />
-          </div>
+          <RouterView />
         </div>
       </div>
     </div>
