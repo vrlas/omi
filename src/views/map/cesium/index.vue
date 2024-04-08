@@ -21,7 +21,7 @@ import 'cesium/Build/Cesium/Widgets/widgets.css'
 import { cesiumOption } from '@/utils/map'
 import { ref, onMounted } from 'vue'
 import board from './board.vue'
-import roadJSON from './road.json'
+import buildingJSON from './building.json'
 
 const lnglat = { lng: 104.341738, lat: 30.593555, pitch: -10, heading: 280, height: 1000 }
 const position = ref({ ...lnglat })
@@ -41,7 +41,7 @@ const initMap = async () => {
         flyTo()
         draw('polygon')
         addPopup()
-        loadRoad()
+        loadBuilding()
       }, 2000)
       helper.removeAll()
     }
@@ -119,9 +119,9 @@ const movePosition = () => {
   }, ScreenSpaceEventType.MOUSE_MOVE)
 }
 
-// 加载道路
-const loadRoad = () => {
-  const promise = GeoJsonDataSource.load(roadJSON, {
+// 加载建筑
+const loadBuilding = () => {
+  const promise = GeoJsonDataSource.load(buildingJSON, {
     clampToGround: true
   })
   promise.then((datasource) => {

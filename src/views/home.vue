@@ -5,6 +5,7 @@ import { useRoute, useRouter, RouterView } from 'vue-router'
 import { flatArray } from '@/utils'
 import { menus, mockList } from '@/mock'
 import { ArrowDown, ChatLineSquare } from '@element-plus/icons-vue'
+import Back from '@/assets/svg/back.vue'
 
 const [route, router] = [useRoute(), useRouter()]
 const map = new Map([['edit', '编辑'], ['info', '详情']])
@@ -16,35 +17,35 @@ const toLogin = () => {
   router.push('/login')
 }
 
-watch(route, () => {
-  // 路由改变初始化数据
-  currentCode.value = ''
-  links.value.length = 0
-  const stack = route.path.slice(1).split('/')
-  // 首位地址(避免多轮筛选)
-  const find = menus.find(item => item.link === stack[0])
-  if (!find) return
-  const match = flatArray([find])
-  let n = 0, bool = true
-  let real
-  while(match && stack.length) {
-    const pop = stack.pop()
-    if (n === 0 && [...map.keys()].includes(pop)) {
-      real = { name: map.get(pop), path: route.path }
-      n++
-    } else {
-      const str = stack.join('/')
-      const handleStr = str ? `${str}/${pop}` : pop
-      const { name, link, code } = match.find(x => x.link === handleStr)
-      if (bool && code && `/${link}` === route.path) {
-        currentCode.value = code
-        bool = false
-      }
-      real = { name, link, code }
-    }
-    links.value.unshift(real)
-  }
-}, { immediate: true })
+// watch(route, () => {
+//   // 路由改变初始化数据
+//   currentCode.value = ''
+//   links.value.length = 0
+//   const stack = route.path.slice(1).split('/')
+//   // 首位地址(避免多轮筛选)
+//   const find = menus.find(item => item.link === stack[0])
+//   if (!find) return
+//   const match = flatArray([find])
+//   let n = 0, bool = true
+//   let real
+//   while(match && stack.length) {
+//     const pop = stack.pop()
+//     if (n === 0 && [...map.keys()].includes(pop)) {
+//       real = { name: map.get(pop), path: route.path }
+//       n++
+//     } else {
+//       const str = stack.join('/')
+//       const handleStr = str ? `${str}/${pop}` : pop
+//       const { name, link, code } = match.find(x => x.link === handleStr)
+//       if (bool && code && `/${link}` === route.path) {
+//         currentCode.value = code
+//         bool = false
+//       }
+//       real = { name, link, code }
+//     }
+//     links.value.unshift(real)
+//   }
+// }, { immediate: true })
 </script>
 
 <template>
@@ -65,7 +66,7 @@ watch(route, () => {
             </div>
           </template>
         </el-dropdown>
-        <div class="bg-blue-400 rounded">
+        <div class="bg-blue-500 rounded">
           <el-dropdown>
             <div class="p-2 outline-none">
               <span class="text-white mr-2">admin</span>
@@ -73,7 +74,9 @@ watch(route, () => {
             </div>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item @click="toLogin()">退出登录</el-dropdown-item>
+                <el-dropdown-item @click="toLogin()">
+                  <Back class="mr-2" />登出
+                </el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
@@ -82,7 +85,7 @@ watch(route, () => {
     </div>
     <div class="t-container flex shadow-inner" style="height: calc(100vh - 80px)">
       <div class="left w-[280px] select-none">
-        <div class="w-[260px] ml-[10px] mt-2 bg-white">
+        <div class="w-[260px] bg-white">
           <el-menu router :default-active="route.path.slice(1)" class="border-none mt-1 menus" style="height: 200px;">
             <el-sub-menu v-for="item, i in menus" :key="i" :index="item.link">
               <template #title>{{ item.name }}</template>
@@ -93,7 +96,7 @@ watch(route, () => {
       </div>
       <div class="right t-gray box-content flex flex-col p-2 w-full" style="height: calc(100% - 16px)">
         <div class="h-full">
-          <div v-if="links.length" class="t-card flex items-center mb-2">
+          <!-- <div v-if="links.length" class="t-card flex items-center mb-2">
             <el-breadcrumb separator="/">
               <template v-for="{ name, link }, i in links" :key="i">
                 <el-breadcrumb-item v-if="i === 0 || i === links.length - 1">
@@ -103,7 +106,7 @@ watch(route, () => {
               </template>
             </el-breadcrumb>
             <source-code v-if="currentCode" :code="currentCode" />
-          </div>
+          </div> -->
           <RouterView />
         </div>
       </div>
