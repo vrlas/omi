@@ -53,7 +53,7 @@ onMounted(render)
 
 <template>
   <div class="bg-white rounded h-full overflow-scroll">
-    <div class="h-[1600px]" ref="subwayRef" style="zoom: 0.84"></div>
+    <div class="h-[1500px]" ref="subwayRef" style="zoom: 0.86"></div>
   </div>
 </template>
 

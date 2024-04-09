@@ -4,8 +4,7 @@ const { position } = defineProps({ position: { type: Object, required: true } })
 
 <template>
   <div class="absolute top-1 left-1 z-20 w-full h-[40px]">
-    <div class="absolute w-full h-full opacity-40"></div>
-    <div class="absolute w-full h-full text-white z-30 flex justify-end items-center text-sm">
+    <div class="absolute w-full h-full text-white z-30 flex justify-end items-center text-sm font-bold pr-2">
       <span>经度: {{ position.lng }}</span>
       <span class="ml-2">纬度: {{ position.lat }}</span>
       <span class="ml-2">高程: {{ position.height }}</span>

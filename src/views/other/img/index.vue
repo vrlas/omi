@@ -19,10 +19,10 @@ const loadModels = async () => {
   if (dects.length) {
     const box = dects[0].alignedRect.box
     position.value = {
-      width: box.width * ratio * 1.1,
-      height: box.height * ratio * 1.1,
+      width: box.width * ratio,
+      height: box.height * ratio,
       left: box.left * ratio,
-      top: box.top * ratio * 0.8 // 修正系数
+      top: box.top * ratio * 0.96 // 修正系数
     }
   } else {
     position.value = {}
@@ -64,7 +64,7 @@ onUnmounted(() => {
 <template>
   <div class="relative t-card h-full">
     <el-button :type="current === 1 && 'primary'" @click="face">视频换狗头</el-button>
-    <div v-if="current === 1" class="h-full translate-y-2">
+    <div v-if="current === 1" class="mt-2">
       <video class="relative w-[800px]" autoplay ref="videoRef" @load="loadModels" />
       <img class="relative hidden" :src="src" ref="imgRef" />
       <div v-if="position.width"
@@ -81,7 +81,6 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 .dog-emoji {
-  background-color: red;
   background: url('./dog.png') no-repeat center/cover;
 }
 </style>

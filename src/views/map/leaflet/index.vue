@@ -88,5 +88,5 @@ onMounted(initMap)
 </script>
 
 <template>
-  <div id="leaflet-map" className="w-full h-full"></div>
+  <div id="leaflet-map" className="t-card w-full h-full t-gray rounded"></div>
 </template>

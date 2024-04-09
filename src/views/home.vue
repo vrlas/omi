@@ -12,91 +12,69 @@ const map = new Map([['edit', '编辑'], ['info', '详情']])
 const links = ref([])
 
 const currentCode = ref('')
-const toLogin = () => {
+const logout = () => {
   localStorage.clear()
   router.push('/login')
 }
 
-// watch(route, () => {
-//   // 路由改变初始化数据
-//   currentCode.value = ''
-//   links.value.length = 0
-//   const stack = route.path.slice(1).split('/')
-//   // 首位地址(避免多轮筛选)
-//   const find = menus.find(item => item.link === stack[0])
-//   if (!find) return
-//   const match = flatArray([find])
-//   let n = 0, bool = true
-//   let real
-//   while(match && stack.length) {
-//     const pop = stack.pop()
-//     if (n === 0 && [...map.keys()].includes(pop)) {
-//       real = { name: map.get(pop), path: route.path }
-//       n++
-//     } else {
-//       const str = stack.join('/')
-//       const handleStr = str ? `${str}/${pop}` : pop
-//       const { name, link, code } = match.find(x => x.link === handleStr)
-//       if (bool && code && `/${link}` === route.path) {
-//         currentCode.value = code
-//         bool = false
-//       }
-//       real = { name, link, code }
-//     }
-//     links.value.unshift(real)
-//   }
-// }, { immediate: true })
+watch(route, () => {
+  // 路由改变初始化数据
+  currentCode.value = ''
+  links.value.length = 0
+  const stack = route.path.slice(1).split('/')
+  // 首位地址(避免多轮筛选)
+  const find = menus.find(item => item.link === stack[0])
+  if (!find) return
+  const match = flatArray([find])
+  let n = 0, bool = true
+  let real
+  while(match && stack.length) {
+    const pop = stack.pop()
+    if (n === 0 && [...map.keys()].includes(pop)) {
+      real = { name: map.get(pop), path: route.path }
+      n++
+    } else {
+      const str = stack.join('/')
+      const handleStr = str ? `${str}/${pop}` : pop
+      const { name, link, code } = match.find(x => x.link === handleStr)
+      if (bool && code && `/${link}` === route.path) {
+        currentCode.value = code
+        bool = false
+      }
+      real = { name, link, code }
+    }
+    links.value.unshift(real)
+  }
+}, { immediate: true })
 </script>
 
 <template>
   <div class="w-screen h-screen flex flex-col">
-    <div class="h-[80px] flex justify-between items-center select-none px-2">
+    <div class="h-[80px] flex items-center select-none px-2 box-border">
       <div class="flex items-center">
-        <img class="cursor-pointer" :src="Logo" />
-        <span class="ml-1 text-[24px] text-slate-600 font-bold">Omi物料库</span>
-      </div>
-      <div class="flex items-center h-[36px] px-2">
-        <el-dropdown trigger="click">
-          <el-badge :value="mockList.length" class="mr-6 flex items-center cursor-pointer font-bold text-blue-500 hover:text-blue-600">
-            <el-icon :size="20"><ChatLineSquare /></el-icon>
-          </el-badge>
-          <template #dropdown>
-            <div class="max-h-[140px] text-slate-600 cursor-pointer">
-              <div v-for="item,i in mockList" :key="i" class="px-4 py-2 hover:bg-blue-200 hover:text-white">{{item}}</div>
-            </div>
-          </template>
-        </el-dropdown>
-        <div class="bg-blue-500 rounded">
-          <el-dropdown>
-            <div class="p-2 outline-none">
-              <span class="text-white mr-2">admin</span>
-              <el-icon class="text-white"><arrow-down /></el-icon>
-            </div>
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item @click="toLogin()">
-                  <Back class="mr-2" />登出
-                </el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
-        </div>
+        <img class="cursor-pointer mx-4" :src="Logo" />
+        <span class="text-[24px] text-slate-600 font-bold">Omi物料库</span>
       </div>
     </div>
-    <div class="t-container flex shadow-inner" style="height: calc(100vh - 80px)">
-      <div class="left w-[280px] select-none">
-        <div class="w-[260px] bg-white">
-          <el-menu router :default-active="route.path.slice(1)" class="border-none mt-1 menus" style="height: 200px;">
-            <el-sub-menu v-for="item, i in menus" :key="i" :index="item.link">
-              <template #title>{{ item.name }}</template>
-              <el-menu-item v-for="{ name, link },j in item.children" :key="`${i}-${j}`" :index="link" @click="router.push(`/${link}`)">{{ name }}</el-menu-item>
-            </el-sub-menu>
-          </el-menu>
+    <div class="t-container flex" style="height: calc(100vh - 80px)">
+      <div class="left py-2 pl-2 box-border w-[280px] select-none relative t-gray rounded">
+        <div class="bg-white flex flex-col h-full rounded">
+          <div class="flex-1 p-2">
+            <el-menu router :default-active="route.path.slice(1)" class="border-none menus">
+              <el-sub-menu v-for="item, i in menus" :key="i" :index="item.link">
+                <template #title>{{ item.name }}</template>
+                <el-menu-item v-for="{ name, link },j in item.children" :key="`${i}-${j}`" :index="link" @click="router.push(`/${link}`)">{{ name }}</el-menu-item>
+              </el-sub-menu>
+            </el-menu>
+          </div>
+          <div class="absolute h-[40px] left-4 right-4 bottom-4 rounded text-sm logout flex justify-center items-center cursor-pointer bg-green-400 text-white" @click="logout">
+            <Back class="mr-2" />登出
+          </div>
         </div>
       </div>
-      <div class="right t-gray box-content flex flex-col p-2 w-full" style="height: calc(100% - 16px)">
+      <div class="right t-gray box-content flex-1 flex flex-col p-2 relative">
         <div class="h-full">
-          <!-- <div v-if="links.length" class="t-card flex items-center mb-2">
+          <div v-if="links.length" class="t-card flex items-center justify-between">
             <el-breadcrumb separator="/">
               <template v-for="{ name, link }, i in links" :key="i">
                 <el-breadcrumb-item v-if="i === 0 || i === links.length - 1">
@@ -106,8 +84,10 @@ const toLogin = () => {
               </template>
             </el-breadcrumb>
             <source-code v-if="currentCode" :code="currentCode" />
-          </div> -->
-          <RouterView />
+          </div>
+          <div class="absolute top-[60px] left-2 right-2 bottom-2" :class="links.length ? 'top-16' : 'top-2'">
+            <RouterView />
+          </div>
         </div>
       </div>
     </div>
@@ -116,7 +96,15 @@ const toLogin = () => {
 
 <style lang="scss" scoped>
 .el-menu-item.is-active {
-  @apply bg-blue-400 text-white box-content px-4;
+  @apply bg-blue-400 text-white box-content px-4 rounded;
+}
+
+.logout>svg {
+  transition: transform 1s linear;
+}
+.logout:hover>svg {
+  @apply -translate-x-1;
+  transition: transform linear .4s;
 }
 
 // 手机端响应式
@@ -125,13 +113,6 @@ const toLogin = () => {
     @apply flex flex-col overflow-hidden;
     .left {
       @apply w-full mb-2;
-      .menus {
-        width: calc(100vw - 10px);
-        @apply overflow-auto;
-      }
-    }
-    .right {
-      // display: 
     }
   }
 }

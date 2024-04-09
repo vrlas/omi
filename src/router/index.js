@@ -35,10 +35,10 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token')
-  if (to.path === '/home') {
-    token ? next() : next('/')
-  } else {
+  if (token) {
     next()
+  } else {
+    to.path === '/login' ? next() : next('/login')
   }
 })
 

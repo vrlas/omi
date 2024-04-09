@@ -16,14 +16,18 @@ const valid = () => {
   return user.value.username && user.value.password
 }
 const login = () => {
-  const success = valid()
-  if (success) {
-    localStorage.setItem('user', JSON.stringify(user.value))
-    localStorage.setItem('token', '123')
-    router.push('/home')
-  } else {
-    ElMessage({ message: '请确认填写无误后再提交', type: 'warning' })
-  }
+  loading.value = true
+  setTimeout(() => {
+    const success = valid()
+    if (success) {
+      localStorage.setItem('user', JSON.stringify(user.value))
+      localStorage.setItem('token', '123')
+      router.push('/home')
+    } else {
+      ElMessage({ message: '请确认填写无误后再提交', type: 'warning' })
+    }
+    loading.value = false
+  }, 2000)
 }
 </script>
 
@@ -40,17 +44,19 @@ const login = () => {
           <img class="cursor-pointer" :src="Logo" />
           <p class="text-[32px] text-slate-600 font-bold">Omi物料库</p>
         </div>
-        <div class="row flex flex-col mt-20">
-          <p class="mb-1 text-sm">用户名：</p>
-          <el-input v-model="user.username" style="height: 40px;width: 100%;" placeholder="请输入" />
-        </div>
-        <div class="row flex flex-col mt-8">
-          <p class="mb-1 text-sm">密码：</p>
-          <el-input v-model="user.password" type="password" style="height: 40px" placeholder="请输入" :show-password="isShow" />
-        </div>
-        <div class="row mt-8">
-          <el-button type="primary" style="width: 100%;padding: 20px;cursor:pointer" :loading="loading" @click="login">登录</el-button>
-        </div>
+        <el-form :model="user">
+          <div class="row flex flex-col mt-20">
+            <p class="mb-1 text-sm">用户名：</p>
+            <el-input v-model="user.username" style="height: 40px;width: 100%;" />
+          </div>
+          <div class="row flex flex-col mt-8">
+            <p class="mb-1 text-sm">密码：</p>
+            <el-input v-model="user.password" type="password" style="height: 40px" :show-password="isShow" />
+          </div>
+          <div class="row mt-8">
+            <el-button class="w-full p-5 cursor-pointer" type="primary" :loading="loading" :disabled="loading" @click="login">登录</el-button>
+          </div>
+        </el-form>
       </div>
     </div>
   </div>

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --light-color:  rgb(249, 249, 253);
+  --bg-light-gray:  rgb(240, 240, 240);
 }
 
 @layer base {
@@ -12,39 +12,20 @@
   }
   /* 超出行数省略 */
   .t-omit {
-    overflow: hidden;
-    text-overflow: ellipsis;
+    @apply overflow-hidden text-ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
   }
   .t-gray {
-    background-color: var(--light-color);
+    background-color: var(--bg-light-gray);
   }
-  /* 卡片样式统一 */
   .t-card {
-    @apply relative p-4 bg-white;
+    @apply p-2 bg-white box-border rounded;
   }
   .t-shadow {
     box-shadow: 0 0 3px rgb(0 0 0 / 0.1);
   }
-}
-/* 地图div graphic */
-.t-divGraphic {
-  width: 285px;
-  height: 192px;
-  background-image: url('/water.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-body {
-  overflow: hidden;
-  // font-family: Arial, Helvetica, sans-serif;
-  // font-family: 'Courier New', Courier, monospace;
-}
-
-.leaflet-touch.leaflet-bar {
-  border: none !important;
 }
 
 // cesium地图滤镜,效果更佳
@@ -54,98 +35,20 @@ body {
 
 /* 滚动条美化 */
 ::-webkit-scrollbar {
-  width: 20px;
+  width: 10px;
 }
+
 ::-webkit-scrollbar-track {
   background-color: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background-color: #d6dee1;
-  border-radius: 20px;
-  border: 6px solid transparent;
+  border-radius: 2px;
+  border: 2px solid transparent;
   background-clip: content-box;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background-color: #a8bbbf;
-}
-
-/* leaflet maker扩散波 */
-.marker-wrapper {
-  width: 64px !important;
-  height: 64px !important;
-  background-color: transparent !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-}
-.wave-circle {
-  display: inline-block !important;
-  position: relative !important;
-  width: 2rem !important;
-  height: 2rem !important;
-  background-color: transparent !important;
-}
-.wave-circle:before {  
-  content: '' !important;
-  position: absolute !important;
-  top: 0 !important;
-  bottom: 0 !important;
-  left: 0 !important;      
-  right: 0 !important;
-  border: .5rem solid rgba(255, 255, 255, 0.5) !important;
-  border-radius: 50% !important;
-  background-color: #10ac84 !important;
-  z-index: 10 !important;
-}
-.wave-circle > .pulse {
-  position: relative !important;
-  top: -1rem !important;
-  left: -1rem !important;
-  width: 4rem !important;
-  height: 4rem !important;
-}
-.wave-circle > .pulse:after {
-  content: '' !important;
-  position: absolute !important;
-  border: 0 solid #10ac84 !important;
-  background: transparent !important;
-  border-radius: 50% !important;
-  height: 4rem !important;
-  width: 4rem !important;
-  animation: pulse 2s ease-out !important;
-  animation-iteration-count: infinite !important;
-  z-index: 1 !important;
-  border-width: 2rem !important;
-  width: 4rem !important;
-}
-.hover-circle .pulse:after {
-  border-width: 2rem !important;
-  width: 4rem !important;
-}
-
-@keyframes pulse {
-  0% {
-    -webkit-transform: scale(0);
-    opacity: 0.3;
-  }
-
-  25% {
-    -webkit-transform: scale(0);
-    opacity: 0.6;
-  }
-
-  50% {
-    -webkit-transform: scale(0.1);
-    opacity: 0.8;
-  }
-
-  75% {
-    -webkit-transform: scale(0.5);
-    opacity: 0.5;
-  }
-
-  100% {
-    -webkit-transform: scale(1);
-    opacity: 0.0;
-  }
 }

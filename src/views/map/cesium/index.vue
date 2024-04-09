@@ -23,6 +23,7 @@ import { ref, onMounted } from 'vue'
 import board from './board.vue'
 import buildingJSON from './building.json'
 
+const isInit = ref(false)
 const lnglat = { lng: 104.341738, lat: 30.593555, pitch: -10, heading: 280, height: 1000 }
 const position = ref({ ...lnglat })
 const [mapRef, divGraphicRef] = [ref(null), ref(null)]
@@ -37,6 +38,7 @@ const initMap = async () => {
   helper.add(viewer.scene.globe.tileLoadProgressEvent, e => {
     if (e === 0) {
       setTimeout(() => {
+        isInit.value = true
         movePosition()
         flyTo()
         draw('polygon')
@@ -144,8 +146,8 @@ onMounted(initMap)
 </script>
 
 <template>
-  <div class="w-full h-full overflow-hidden relative" ref="mapRef">
-    <div class="absolute -z-10 t-divGraphic" ref="divGraphicRef">
+  <div class="w-full h-full" ref="mapRef">
+    <div class="absolute -z-10 t-graphic" ref="divGraphicRef">
       <div class="absolute top-2 left-[128px] text-white font-bold text-sm">1号观景点</div>
       <div class="absolute top-8 left-12 w-[140px] h-[120px] text-white text text-sm flex flex-col justify-evenly">
         <div>经度: <el-tag class="ml-2" type="primary" size="small">104.325891</el-tag></div>
@@ -153,6 +155,13 @@ onMounted(initMap)
         <div>高程: <el-tag class="ml-2" type="primary" size="small">42.84m</el-tag></div>
       </div>
     </div>
-    <board :position="position" />
+    <board v-if="isInit" :position="position" />
   </div>
 </template>
+
+<style lang="scss" scoped>
+.t-graphic {
+  @apply w-[285px] h-[192px] bg-no-repeat bg-cover;
+  background-image: url('/water.png');
+}
+</style>
