@@ -1,13 +1,11 @@
 <script setup>
 import { ref } from 'vue'
-import Su7Blue from '@/assets/imgs/su7_blue.png'
-import Su7White from '@/assets/imgs/su7_white.png'
+import Su7Blue from './su7_blue.png'
+import Su7White from './su7_white.png'
 
 const inset = ref(200)
 
-const move = e => {
-  inset.value = e.offsetX
-}
+const move = e => inset.value = e.offsetX
 </script>
 
 <template>
