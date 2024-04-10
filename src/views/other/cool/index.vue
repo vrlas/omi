@@ -1,7 +1,7 @@
 <script setup>
-import su7 from './components/su7.vue'
-import face from './components/face.vue'
-import scale from './components/scale.vue'
+import su7 from './component/su7.vue'
+import face from './component/face.vue'
+import scale from './component/scale.vue'
 </script>
 
 <template>
