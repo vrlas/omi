@@ -2,20 +2,17 @@
 import { ref, onUnmounted } from 'vue'
 import img from './image.png'
 
-const [imgRef, videoRef, src, current, isInit] = [ref(null), ref(null), ref(null), ref(0), ref(true)]
-let interval
-const canvas = document.createElement('canvas')
-const ctx = canvas.getContext('2d')
-canvas.width = 400
-canvas.height = 400
+const [imgRef, videoRef, src, isInit, checked] = [ref(null), ref(null), ref(null), ref(true), ref(false)]
 const position = ref({})
-const checked = ref(false)
+const [canvas, ctx] = [ref(null), ref(null)]
+let interval
+
 
 const loadModels = async () => {
-  ctx.drawImage(videoRef.value, 0, 0, canvas.width, canvas.height)
-  const url = canvas.toDataURL('image/png', 0.1)
+  ctx.value.drawImage(videoRef.value, 0, 0, canvas.value.width, canvas.value.height)
+  const url = canvas.value.toDataURL('image/png')
   src.value = url
-  const ratio = canvas.width / imgRef.value.naturalWidth // 缩放比率
+  const ratio = canvas.value.width / imgRef.value.naturalWidth // 缩放比率
   const dects = await faceapi.detectAllFaces(imgRef.value, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
   if (dects.length) {
     const box = dects[0].alignedRect.box
@@ -25,8 +22,6 @@ const loadModels = async () => {
       left: box.left * ratio,
       top: box.top * ratio * 0.96 // 修正系数
     }
-  } else {
-    position.value = {}
   }
 }
 
@@ -37,20 +32,24 @@ const face =  async () => {
     return
   }
   if (isInit.value) {
+    canvas.value = document.createElement('canvas')
+    ctx.value = canvas.value.getContext('2d')
+    canvas.value.width = 400
+    canvas.value.height = 400
     await Promise.all([
       faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
       faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
+      faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
       faceapi.nets.faceExpressionNet.loadFromUri('/models')
     ])
     isInit.value = false
   }
-  const constraints = { audio: false, video: { width: 400, height: 400 } };
   navigator.mediaDevices
-    .getUserMedia(constraints)
+    .getUserMedia({ audio: false, video: { width: 400, height: 400 } })
     .then(mediaStream => {
       videoRef.value.srcObject = mediaStream
       videoRef.value.onloadedmetadata = () => {
-        interval = setInterval(loadModels,100)
+        interval = setInterval(loadModels,200)
       }
   })
 }
