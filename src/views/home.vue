@@ -51,7 +51,7 @@ watch(route, () => {
   <div class="w-screen h-screen flex flex-col">
     <div class="h-[80px] flex items-center select-none box-border">
       <div class="flex items-center">
-        <img class="cursor-pointer ml-4" :src="Logo" />
+        <img class="cursor-pointer ml-4 w-12" :src="Logo" />
         <span class="text-[24px] text-slate-600 font-bold ml-2">Omi物料库</span>
       </div>
     </div>

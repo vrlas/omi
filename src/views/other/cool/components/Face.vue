@@ -4,7 +4,7 @@ import { ref, onUnmounted } from 'vue'
 const [imgRef, videoRef, src, isInit, checked] = [ref(null), ref(null), ref(null), ref(true), ref(false)]
 const position = ref({})
 const [canvas, ctx] = [ref(null), ref(null)]
-let interval
+let interval, media
 
 
 const loadModels = async () => {
@@ -16,8 +16,8 @@ const loadModels = async () => {
   if (dects.length) {
     const box = dects[0].alignedRect.box
     position.value = {
-      width: box.width * ratio,
-      height: box.height * ratio,
+      width: box.width * ratio, // 宽高一致避免图片压缩
+      // height: box.height * ratio,
       left: box.left * ratio,
       top: box.top * ratio * 0.96 // 修正系数
     }
@@ -47,6 +47,7 @@ const face =  async () => {
     .getUserMedia({ audio: false, video: { width: 400, height: 400 } })
     .then(mediaStream => {
       videoRef.value.srcObject = mediaStream
+      media = mediaStream
       videoRef.value.onloadedmetadata = () => {
         interval = setInterval(loadModels,200)
       }
@@ -55,6 +56,8 @@ const face =  async () => {
 
 onUnmounted(() => {
   interval && clearInterval(interval)
+  // 关闭摄像头
+  media && media.getVideoTracks().forEach(track => track.stop())
 })
 </script>
 
@@ -72,7 +75,7 @@ onUnmounted(() => {
         class="absolute z-10 dog-emoji"
         :style="{
           width: `${position.width}px`,
-          height: `${position.height}px`,
+          height: `${position.width}px`,
           left: `${position.left}px`,
           top: `${position.top}px`
         }"
@@ -83,6 +86,6 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 .dog-emoji {
-  background: url('./dog.png') no-repeat center/cover;
+  background: url('./face.png') no-repeat center/cover;
 }
 </style>
