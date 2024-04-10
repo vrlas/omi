@@ -70,7 +70,7 @@ watch(route, () => {
               </el-sub-menu>
             </el-menu>
           </div>
-          <div class="absolute h-[40px] left-4 right-4 bottom-4 rounded text-sm logout flex justify-center items-center cursor-pointer bg-green-400 text-white" @click="logout">
+          <div class="logout absolute h-[40px] left-4 right-4 bottom-4 rounded text-sm logout flex justify-center items-center cursor-pointer bg-green-400 text-white" @click="logout">
             <Back class="mr-2" />登出
           </div>
         </div>
@@ -115,9 +115,12 @@ watch(route, () => {
 // 手机端响应式
 .is-mobile {
   .t-container {
-    @apply flex flex-col overflow-hidden;
+    @apply flex flex-col;
     .left {
-      @apply w-full mb-2;
+      @apply w-full px-0 pt-0 relative;
+      .logout {
+        @apply relative w-[96%] mx-auto left-0 mt-4;
+      }
     }
   }
 }

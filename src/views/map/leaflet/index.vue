@@ -95,4 +95,7 @@ onMounted(initMap)
 #leaflet-map .leaflet-tile {
   filter: hue-rotate(180deg);
 }
+.leaflet-popup-content-wrapper {
+  border: 4px dashed rgba(0,255,0,.4);
+}
 </style>
