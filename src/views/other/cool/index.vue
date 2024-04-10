@@ -1,11 +1,11 @@
 <script setup>
-import Su7 from './components/Su7.vue'
-import Face from './components/Face.vue'
+import su7 from './components/su7.vue'
+import face from './components/face.vue'
 </script>
 
 <template>
   <div class="flex flex-wrap gap-2">
-    <Su7>图片滑块</Su7>
-    <Face>人脸检测</Face>
+    <su7>图片滑块</su7>
+    <face>人脸检测</face>
   </div>
 </template>

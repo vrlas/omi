@@ -3,8 +3,7 @@ import { ref, watch } from 'vue'
 import Logo from '@/assets/logo.png'
 import { useRoute, useRouter, RouterView } from 'vue-router'
 import { flatArray } from '@/utils'
-import { menus, mockList } from '@/mock'
-import { ArrowDown, ChatLineSquare } from '@element-plus/icons-vue'
+import { menus } from '@/mock'
 import Back from '@/assets/svg/back.vue'
 
 const [route, router] = [useRoute(), useRouter()]
@@ -50,10 +49,10 @@ watch(route, () => {
 
 <template>
   <div class="w-screen h-screen flex flex-col">
-    <div class="h-[80px] flex items-center select-none px-2 box-border">
+    <div class="h-[80px] flex items-center select-none box-border">
       <div class="flex items-center">
-        <img class="cursor-pointer mx-4" :src="Logo" />
-        <span class="text-[24px] text-slate-600 font-bold">Omi物料库</span>
+        <img class="cursor-pointer ml-4" :src="Logo" />
+        <span class="text-[24px] text-slate-600 font-bold ml-2">Omi物料库</span>
       </div>
     </div>
     <div class="t-container flex" style="height: calc(100vh - 80px)">
@@ -62,8 +61,12 @@ watch(route, () => {
           <div class="flex-1 p-2">
             <el-menu router :default-active="route.path.slice(1)" class="border-none menus">
               <el-sub-menu v-for="item, i in menus" :key="i" :index="item.link">
-                <template #title>{{ item.name }}</template>
-                <el-menu-item v-for="{ name, link },j in item.children" :key="`${i}-${j}`" :index="link" @click="router.push(`/${link}`)">{{ name }}</el-menu-item>
+                <template #title>
+                  {{ item.name }}
+                </template>
+                <el-menu-item v-for="{ name, link },j in item.children" :key="`${i}-${j}`" :index="link" @click="router.push(`/${link}`)">
+                  {{ name }}
+                </el-menu-item>
               </el-sub-menu>
             </el-menu>
           </div>
@@ -80,7 +83,9 @@ watch(route, () => {
                 <el-breadcrumb-item v-if="i === 0 || i === links.length - 1">
                   <span class="cursor-not-allowed">{{ name }}</span>
                 </el-breadcrumb-item>
-                <el-breadcrumb-item v-else :to="{ path: `/${link}` }">{{ name }}</el-breadcrumb-item>
+                <el-breadcrumb-item v-else :to="{ path: `/${link}` }">
+                  {{ name }}
+                </el-breadcrumb-item>
               </template>
             </el-breadcrumb>
             <source-code v-if="currentCode" :code="currentCode" />

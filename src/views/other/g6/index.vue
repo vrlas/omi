@@ -1,20 +1,22 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { Graph } from '@antv/g6'
-import lineRong from '@/mock/linerong'
-import line1 from '@/mock/line1'
-import line2 from '@/mock/line2'
-import line3 from '@/mock/line3'
-import line4 from '@/mock/line4'
-import line5 from '@/mock/line5'
-import line6 from '@/mock/line6'
-import line7 from '@/mock/line7'
-import line8 from '@/mock/line8'
-import line9 from '@/mock/line9'
-import line10 from '@/mock/line10'
-import line17 from '@/mock/line17'
-import line18 from '@/mock/line18'
-import walk from '@/mock/walk'
+import {
+  lineRong,
+  line1,
+  line2,
+  line3,
+  line4,
+  line5,
+  line6,
+  line7,
+  line8,
+  line9,
+  line10,
+  line17,
+  line18,
+  walk
+} from './line'
 
 const subwayRef = ref(null)
 const render = () => {
@@ -26,7 +28,6 @@ const render = () => {
         position: 'top',
         offset: 4,
         style: {
-          // fill: '#fff',
           fontSize: 11
         }
       },
@@ -53,7 +54,7 @@ onMounted(render)
 
 <template>
   <div class="bg-white rounded h-full overflow-scroll">
-    <div class="h-[1500px]" ref="subwayRef" style="zoom: 0.86"></div>
+    <div ref="subwayRef" class="h-[1500px]" style="zoom: 0.86"></div>
   </div>
 </template>
 

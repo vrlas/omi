@@ -39,22 +39,32 @@ const login = () => {
         <Icon width="600px" />
       </div>
       <div class="right w-[600px] p-20">
-        <p class="text-slate-600 text-[20px]">欢迎使用</p>
+        <p class="text-slate-600 text-[20px]">
+          欢迎使用
+        </p>
         <div class="flex gap-1 mt-4">
           <img class="cursor-pointer" :src="Logo" />
-          <p class="text-[32px] text-slate-600 font-bold">Omi物料库</p>
+          <p class="text-[32px] text-slate-600 font-bold">
+            Omi物料库
+          </p>
         </div>
         <el-form :model="user">
           <div class="row flex flex-col mt-20">
-            <p class="mb-1 text-sm">用户名：</p>
+            <p class="mb-1 text-sm">
+              用户名：
+            </p>
             <el-input v-model="user.username" style="height: 40px;width: 100%;" />
           </div>
           <div class="row flex flex-col mt-8">
-            <p class="mb-1 text-sm">密码：</p>
+            <p class="mb-1 text-sm">
+              密码：
+            </p>
             <el-input v-model="user.password" type="password" style="height: 40px" :show-password="isShow" />
           </div>
           <div class="row mt-8">
-            <el-button class="w-full p-5 cursor-pointer" type="primary" :loading="loading" :disabled="loading" @click="login">登录</el-button>
+            <el-button class="w-full p-5 cursor-pointer" type="primary" :loading="loading" :disabled="loading" @click="login">
+              登录
+            </el-button>
           </div>
         </el-form>
       </div>

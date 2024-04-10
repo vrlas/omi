@@ -1,6 +1,5 @@
 <script setup>
 import { ref, onUnmounted } from 'vue'
-import img from './image.png'
 
 const [imgRef, videoRef, src, isInit, checked] = [ref(null), ref(null), ref(null), ref(true), ref(false)]
 const position = ref({})
@@ -63,19 +62,21 @@ onUnmounted(() => {
   <div class="relative t-card w-[400px] h-[400px] p-0">
     <div class="absolute top-0 left-0 right-0 h-10 rounded-t-md bg-blue-400 text-white text-sm flex items-center justify-center cursor-pointer z-10">
       <slot />
-      <el-checkbox class="ml-1" v-model="checked" @change="face" />
+      <el-checkbox v-model="checked" class="ml-1" @change="face" />
     </div>
     <template v-if="checked">
-      <video class="relative w-full h-full object-cover rounded" autoplay ref="videoRef" @load="loadModels" />
-      <img class="relative hidden" :src="src" ref="imgRef" />
-      <div v-if="position.width"
+      <video ref="videoRef" class="relative w-full h-full object-cover rounded" autoplay @load="loadModels" />
+      <img ref="imgRef" class="relative hidden" :src="src" />
+      <div
+        v-if="position.width"
         class="absolute z-10 dog-emoji"
         :style="{
           width: `${position.width}px`,
           height: `${position.height}px`,
           left: `${position.left}px`,
           top: `${position.top}px`
-        }"></div>
+        }"
+      ></div>
     </template>
   </div>
 </template>

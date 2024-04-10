@@ -23,9 +23,3 @@ export const menus = [
     ]
   }
 ]
-
-export const mockList = [
-  '图片抠图细节实现',
-  'm3u8视频播放器',
-  '地图加载阻塞页面渲染'
-]

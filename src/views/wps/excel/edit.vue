@@ -6,6 +6,6 @@ const id = useRoute().query?.id
 
 <template>
   <div class="card p-4 bg-white">
-    
+    {{ id }}
   </div>
 </template>

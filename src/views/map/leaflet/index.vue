@@ -1,14 +1,13 @@
 <script setup>
 import 'leaflet/dist/leaflet.css'
 import * as L from 'leaflet'
-import { antPath } from 'leaflet-ant-path'
-import { ref, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import AMapLoader from '@amap/amap-jsapi-loader'
 import 'leaflet.chinatmsproviders'
 import 'leaflet.markercluster/dist/leaflet.markercluster'
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css'
 
-let AMap, map, placeSearch
+let AMap, map
 
 // 添加公交站点
 const addStations = () => {
@@ -22,12 +21,12 @@ const addStations = () => {
     station.search('地铁站', (status, result) => {
       if (status === 'complete') {
         const { stationInfo } = result
-        stationInfo.forEach((station, i) => {
+        stationInfo.forEach(station => {
           const { name, location: { lng, lat } } = station
           const marker = L.marker(new L.LatLng(lat, lng), {
             icon: L.icon({
               iconUrl: '/station.png',
-              iconSize: [32, 41]
+              iconSize: [40, 40]
             })
           })
           marker.bindPopup(name).openPopup()
@@ -43,6 +42,7 @@ const addStations = () => {
 const addListener = () => {
   map.on('zoomend', e => {
     const scale = e.target.getZoom()
+    console.log(scale)
   })
 }
 
@@ -77,7 +77,7 @@ const initMap = async () => {
     center: [30.6574, 104.0658],
     zoom: 13
   })
-  placeSearch = new AMap.PlaceSearch({city: '028'})
+  new AMap.PlaceSearch({city: '028'})
   addStations()
   addListener()
   addLayer()
@@ -90,3 +90,9 @@ onMounted(initMap)
 <template>
   <div id="leaflet-map" className="t-card w-full h-full t-gray rounded"></div>
 </template>
+
+<style lang="scss">
+#leaflet-map .leaflet-tile {
+  filter: hue-rotate(180deg);
+}
+</style>

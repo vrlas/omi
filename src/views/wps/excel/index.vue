@@ -99,7 +99,7 @@ onBeforeMount(() => {
       <el-table v-loading="loading" height="100%" size="large" :data="data" stripe>
         <el-table-column label="项目">
           <template #default="{ row }">
-            <a :href="`https://github.com/${row.name}`" target="_blank"class="text-blue-500 hover:text-blue-800">{{ row.author }}{{ row.name }}</a>
+            <a :href="`https://github.com/${row.name}`" target="_blank" class="text-blue-500 hover:text-blue-800">{{ row.author }}{{ row.name }}</a>
           </template>
         </el-table-column>
         <el-table-column label="描述">
