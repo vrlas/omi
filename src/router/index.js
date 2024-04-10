@@ -25,7 +25,7 @@ const router = createRouter({
         { path: 'wps/pdf', component: () => import('../views/wps/pdf/index.vue') },
         { path: 'map/cesium', component: () => import('../views/map/cesium/index.vue') },
         { path: 'map/leaflet', component: () => import('../views/map/leaflet/index.vue') },
-        { path: 'other/img', component: () => import('../views/other/img/index.vue') },
+        { path: 'other/cool', component: () => import('../views/other/cool/index.vue') },
         { path: 'other/g6', component: () => import('../views/other/g6/index.vue') }
         // { path: '*', component: NotFound }
       ]

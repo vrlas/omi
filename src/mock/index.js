@@ -19,7 +19,7 @@ export const menus = [
     link: 'other',
     children: [
       { name: '拓扑图', link: 'other/g6', code: '/other/g6/index.vue' },
-      { name: '图像处理', link: 'other/img', code: '/other/img/index.vue' }
+      { name: 'cool', link: 'other/cool', code: '/other/cool/index.vue' }
     ]
   }
 ]

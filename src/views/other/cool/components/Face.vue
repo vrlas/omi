@@ -1,14 +1,15 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onUnmounted } from 'vue'
 import img from './image.png'
 
 const [imgRef, videoRef, src, current, isInit] = [ref(null), ref(null), ref(null), ref(0), ref(true)]
 let interval
 const canvas = document.createElement('canvas')
 const ctx = canvas.getContext('2d')
-canvas.width = 800
-canvas.height = 450
+canvas.width = 400
+canvas.height = 400
 const position = ref({})
+const checked = ref(false)
 
 const loadModels = async () => {
   ctx.drawImage(videoRef.value, 0, 0, canvas.width, canvas.height)
@@ -31,8 +32,7 @@ const loadModels = async () => {
 
 // 开启人脸检测
 const face =  async () => {
-  current.value = current.value === 1 ? 0 : 1
-  if (current.value !== 1) {
+  if (!checked.value) {
     clearInterval(interval)
     return
   }
@@ -42,10 +42,9 @@ const face =  async () => {
       faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
       faceapi.nets.faceExpressionNet.loadFromUri('/models')
     ])
-    console.log(1)
     isInit.value = false
   }
-  const constraints = { audio: false, video: { width: 1280, height: 720 } };
+  const constraints = { audio: false, video: { width: 400, height: 400 } };
   navigator.mediaDevices
     .getUserMedia(constraints)
     .then(mediaStream => {
@@ -62,10 +61,13 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="relative t-card h-full">
-    <el-button :type="current === 1 && 'primary'" @click="face">视频换狗头</el-button>
-    <div v-if="current === 1" class="mt-2">
-      <video class="relative w-[800px]" autoplay ref="videoRef" @load="loadModels" />
+  <div class="relative t-card w-[400px] h-[400px] p-0">
+    <div class="absolute top-0 left-0 right-0 h-10 rounded-t-md bg-blue-400 text-white text-sm flex items-center justify-center cursor-pointer z-10">
+      <slot />
+      <el-checkbox class="ml-1" v-model="checked" @change="face" />
+    </div>
+    <template v-if="checked">
+      <video class="relative w-full h-full object-cover rounded" autoplay ref="videoRef" @load="loadModels" />
       <img class="relative hidden" :src="src" ref="imgRef" />
       <div v-if="position.width"
         class="absolute z-10 dog-emoji"
@@ -75,7 +77,7 @@ onUnmounted(() => {
           left: `${position.left}px`,
           top: `${position.top}px`
         }"></div>
-    </div>
+    </template>
   </div>
 </template>
 
