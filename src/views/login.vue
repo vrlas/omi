@@ -67,9 +67,9 @@ const refresh = () => {
   do {
     n = Math.floor(Math.random() * imgs.length)
   } while (n === random.value)
-  random.value = n
   initAngle = Math.floor(Math.floor(Math.random() * (320 - 40 + 1)) + 40)
   angle.value = initAngle
+  random.value = n
 }
 
 onMounted(() => {
