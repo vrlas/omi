@@ -1,6 +1,6 @@
 <script setup>
 import { useRouter } from 'vue-router'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 import { ElMessage } from 'element-plus'
 import Icon from '@/components/Icon.vue'
 import Logo from '@/assets/logo.png'
@@ -27,6 +27,7 @@ const draggable = ref(false)
 const boxRef = ref(null)
 const offset = ref(100)
 const show = ref(null)
+const showImg = ref(true)
 const res = ref('none')
 
 const valid = () => {
@@ -67,11 +68,13 @@ const refresh = () => {
   do {
     n = Math.floor(Math.random() * imgs.length)
   } while (n === random.value)
+  showImg.value = false
   random.value = n
-  nextTick(() => {
-    initAngle = Math.floor(Math.floor(Math.random() * (320 - 40 + 1)) + 40)
-    angle.value = initAngle
-  })
+  initAngle = Math.floor(Math.floor(Math.random() * (320 - 40 + 1)) + 40)
+  angle.value = initAngle
+  setTimeout(() => {
+    showImg.value = true
+  }, 500)
 }
 
 onMounted(() => {
@@ -141,12 +144,14 @@ onMounted(() => {
                   拖动滑块,使图片角度为正
                 </p>
                 <div class="mx-auto w-[180px] h-[180px] my-4 relative">
+                  <img v-show="!showImg" class="t-abs-center" src="https://minio.tianai.cloud/public/static/captcha/images/loading.gif" />
                   <img
+                    v-show="showImg"
                     class="border-4 border-white rounded-full relative w-full h-full"
                     :src="`https://sineava-omi.vercel.app/imgs/${imgs[random]}`"
                     :style="`transform: rotate(${angle}deg)`"
                   />
-                  <img class="t-abs-center w-full h-full" src="https://minio.tianai.cloud/public/static/captcha/images/axis.png" />
+                  <img v-show="showImg" class="t-abs-center w-full h-full" src="https://minio.tianai.cloud/public/static/captcha/images/axis.png" />
                 </div>
                 <div ref="boxRef" class="relative h-[40px]">
                   <div v-if="res === 'success'" class="absolute valid-res bg-green-500 opacity-80">
