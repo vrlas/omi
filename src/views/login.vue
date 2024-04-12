@@ -67,9 +67,11 @@ const refresh = () => {
   do {
     n = Math.floor(Math.random() * imgs.length)
   } while (n === random.value)
-  initAngle = Math.floor(Math.floor(Math.random() * (320 - 40 + 1)) + 40)
-  angle.value = initAngle
   random.value = n
+  nextTick(() => {
+    initAngle = Math.floor(Math.floor(Math.random() * (320 - 40 + 1)) + 40)
+    angle.value = initAngle
+  })
 }
 
 onMounted(() => {
@@ -141,7 +143,7 @@ onMounted(() => {
                 <div class="mx-auto w-[180px] h-[180px] my-4 relative">
                   <img
                     class="border-4 border-white rounded-full relative w-full h-full"
-                    :src="`/imgs/${imgs[random]}`"
+                    :src="`https://sineava-omi.vercel.app/imgs/${imgs[random]}`"
                     :style="`transform: rotate(${angle}deg)`"
                   />
                   <img class="t-abs-center w-full h-full" src="https://minio.tianai.cloud/public/static/captcha/images/axis.png" />
