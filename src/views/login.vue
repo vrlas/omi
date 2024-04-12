@@ -117,8 +117,8 @@ onMounted(() => {
               Omi物料库
             </p>
           </div>
-          <el-form :model="user">
-            <div class="row flex flex-col mt-20">
+          <el-form class="mt-10" :model="user">
+            <div class="row flex flex-col">
               <p class="mb-1 text-sm">
                 用户名：
               </p>
@@ -134,27 +134,27 @@ onMounted(() => {
               <el-button class="w-full p-5 cursor-pointer" :loading="loading" type="primary" @click="showValid">
                 登录
               </el-button>
-              <div v-if="show" class="absolute left-0 bottom-14 w-full h-[330px] rounded slider p-2" @mousemove="mousemove">
-                <p class="text-sm font-bold select-none">
+              <div v-if="show" class="absolute left-0 bottom-14 w-full h-[330px] rounded slider p-2 select-none" @mousemove="mousemove">
+                <p class="text-sm font-medium text-center">
                   拖动滑块,使图片角度为正
                 </p>
                 <div class="mx-auto w-[180px] h-[180px] my-4 relative">
                   <img
-                    class="border-4 border-white rounded-full relative w-full h-full select-none"
+                    class="border-4 border-white rounded-full relative w-full h-full"
                     :src="`/imgs/${imgs[random]}`"
                     :style="`transform: rotate(${angle}deg)`"
                   />
-                  <img class="t-abs-center w-full h-full select-none" src="https://minio.tianai.cloud/public/static/captcha/images/axis.png" />
+                  <img class="t-abs-center w-full h-full" src="https://minio.tianai.cloud/public/static/captcha/images/axis.png" />
                 </div>
                 <div ref="boxRef" class="relative h-[40px]">
-                  <div v-if="res === 'success'" class="absolute valid-res bg-green-600">
+                  <div v-if="res === 'success'" class="absolute valid-res bg-green-500 opacity-80">
                     验证成功
                   </div>
-                  <div v-if="res === 'error'" class="absolute valid-res bg-red-600">
+                  <div v-if="res === 'error'" class="absolute valid-res bg-red-500 opacity-80">
                     验证失败
                   </div>
                   <div class="absolute w-full h-full bg-[#f5f5f5] opacity-80"></div>
-                  <div class="absolute w-[20px] h-full bg-[#f7b645] opacity-40" :style="`width: ${left}px`"></div>
+                  <div class="absolute w-[20px] h-full bg-blue-400" :style="`width: ${left}px`"></div>
                   <div class="absolute h-full w-[60px] cursor-pointer plane" :style="`left: ${left}px`" draggable @mousedown="mousedown"></div>
                 </div>
                 <div class="flex h-8 justify-end mt-2 text-gray-600 cursor-pointer w-14 ml-auto mr-0 gap-2">
@@ -171,9 +171,9 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .slider {
-  background:  url('@/assets/imgs/valid-bg.png') no-repeat center/cover;
+  background:  url('https://minio.tianai.cloud/public/captcha-btn/btn2-bg.jpg') no-repeat center/cover;
   .plane {
-    background: url('@/assets/imgs/valid-btn.png') no-repeat center/cover;
+    background: url('https://minio.tianai.cloud/public/captcha-btn/btn4.png') no-repeat center/cover;
   }
   .valid-res {
     animation: fade .5s linear;
