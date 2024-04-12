@@ -41,10 +41,10 @@ const mousedown = () => {
 const mousemove = e => {
   if (draggable.value) {
     const pixel = e.pageX - offset.value
-    if (pixel <= 0) {
+    if (pixel <= 30) {
       left.value = 0
-    } else if (pixel < 314 - 60) {
-      left.value = pixel
+    } else if (pixel < 314 - 30) {
+      left.value = pixel - 30
     } else {
       left.value = 314 - 60
     }
