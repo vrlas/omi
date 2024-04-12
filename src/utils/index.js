@@ -1,8 +1,4 @@
-// 数据处理
-
-/**
- * 扁平树结构
- */
+// 扁平树结构
 export const flatArray = arr => {
   const result = [];
   arr.forEach(item => {

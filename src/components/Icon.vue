@@ -1,13 +1,28 @@
 <script setup>
-import { Vue3Lottie } from 'vue3-lottie'
-import jobJson from '@/assets/lotties/job.json'
+import { defineAsyncComponent } from 'vue'
+import { Vue3Lottie as Lottie } from 'vue3-lottie'
 
-defineProps({
-  width: String,
+const { name } = defineProps({
+  name: { type: String, required: true },
+  type: { type: String, defualt: 'svg' }, // 传入json表示为lottie
+  width: { type: String, default: '24px' },
   height: String
 })
+const icon = defineAsyncComponent(() => import(`../assets/svg/${name}.svg?component`))
 </script>
 
 <template>
-  <Vue3Lottie :animationData="jobJson" :width="width" :height="height" />
+  <template v-if="type === 'lottie'">
+    <Lottie :animation-data="name" :width="width" :height="height || width" />
+  </template>
+  <template v-else>
+    <component :is="icon" class="icon" />
+  </template>
 </template>
+
+<style lang="scss">
+.icon svg {
+  width: v-bind(width);
+  height: v-bind(width);
+}
+</style>

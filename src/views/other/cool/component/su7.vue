@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
-import Su7Blue from './su7_blue.png'
-import Su7White from './su7_white.png'
+import Su7Blue from '@/assets/imgs/su7_blue.png'
+import Su7White from '@/assets/imgs/su7_white.png'
 
 const inset = ref(200)
 

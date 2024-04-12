@@ -38,10 +38,10 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .avatar {
-  background: url('./panda.png') no-repeat 0 0/cover;
+  background: url('@/assets/imgs/panda.png') no-repeat 0 0/cover;
 }
 .bigger {
-  background: url('./panda.png') no-repeat 0 0;
+  background: url('@/assets/imgs/panda.png') no-repeat 0 0;
   background-size: 200% 204%;
   filter: hue-rotate(180deg);
 }

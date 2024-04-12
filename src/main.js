@@ -7,13 +7,13 @@ import { createPinia } from 'pinia'
 import Vue3Lottie from 'vue3-lottie'
 
 import App from './App.vue'
+import Icon from '@/components/Icon.vue'
 import router from './router'
-import Github from '@/assets/svg/github.vue'
 const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent)
 isMobile && document.body.classList.add('is-mobile')
 
 createApp(App)
-  .component('source-code', Github)
+  .component('Icon', Icon)
   .use(createPinia())
   .use(router)
   .use(Vue3Lottie)

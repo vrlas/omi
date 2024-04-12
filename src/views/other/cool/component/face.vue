@@ -86,6 +86,6 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 .dog-emoji {
-  background: url('./face.png') no-repeat center/cover;
+  background: url('@/assets/imgs/face.png') no-repeat center/cover;
 }
 </style>

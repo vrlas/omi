@@ -22,6 +22,7 @@ import { cesiumOption } from '@/utils/map'
 import { ref, onMounted } from 'vue'
 import board from './board.vue'
 import buildingJSON from './building.json'
+import House from '@/assets/imgs/house.jpg'
 
 const isInit = ref(false)
 const lnglat = { lng: 104.341738, lat: 30.593555, pitch: -10, heading: 280, height: 1000 }
@@ -131,10 +132,10 @@ const loadBuilding = () => {
     const entities = datasource.entities.values
     let material = new ImageMaterialProperty({
       color: Color.SKYBLUE.withAlpha(0.5),
-      image: '/house.jpg'
+      image: House
     })
     entities.length = 400
-    entities.forEach((entity, i) => {
+    entities.forEach(entity => {
       entity.polygon.extrudedHeight = Math.round(Math.random() * 800) + 400
       entity.polygon.outline = false
       entity.polygon.material = material
@@ -146,13 +147,27 @@ onMounted(initMap)
 </script>
 
 <template>
-  <div class="w-full h-full" ref="mapRef">
-    <div class="absolute -z-10 t-graphic" ref="divGraphicRef">
-      <div class="absolute top-2 left-[128px] text-white font-bold text-sm">1号观景点</div>
+  <div ref="mapRef" class="w-full h-full">
+    <div ref="divGraphicRef" class="absolute -z-10 t-graphic">
+      <div class="absolute top-2 left-[128px] text-white font-bold text-sm">
+        1号观景点
+      </div>
       <div class="absolute top-8 left-12 w-[140px] h-[120px] text-white text text-sm flex flex-col justify-evenly">
-        <div>经度: <el-tag class="ml-2" type="primary" size="small">104.325891</el-tag></div>
-        <div>纬度: <el-tag class="ml-2" type="primary" size="small">30.594535</el-tag></div>
-        <div>高程: <el-tag class="ml-2" type="primary" size="small">42.84m</el-tag></div>
+        <div>
+          经度: <el-tag class="ml-2" type="primary" size="small">
+            104.325891
+          </el-tag>
+        </div>
+        <div>
+          纬度: <el-tag class="ml-2" type="primary" size="small">
+            30.594535
+          </el-tag>
+        </div>
+        <div>
+          高程: <el-tag class="ml-2" type="primary" size="small">
+            42.84m
+          </el-tag>
+        </div>
       </div>
     </div>
     <board v-if="isInit" :position="position" />
@@ -162,6 +177,6 @@ onMounted(initMap)
 <style lang="scss" scoped>
 .t-graphic {
   @apply w-[285px] h-[192px] bg-no-repeat bg-cover;
-  background-image: url('/water.png');
+  background-image: url('@/assets/imgs/water.png');
 }
 </style>

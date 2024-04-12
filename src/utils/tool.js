@@ -24,6 +24,7 @@ const exportTable = (data, title = '表格.xlsx', config = { enable: false }) =>
       for (let i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xff
       return buf
     }
+    // eslint-disable-next-line no-unused-vars
     let [_, s, m, e, n] = sheet['!ref'].match(/^([a-z]+)([0-9]+):([a-z]+)([0-9]+)$/i)
     const [sCode, eCode] = [s.charCodeAt(), e.charCodeAt()]
     const style = {

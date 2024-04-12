@@ -6,6 +6,7 @@ import AMapLoader from '@amap/amap-jsapi-loader'
 import 'leaflet.chinatmsproviders'
 import 'leaflet.markercluster/dist/leaflet.markercluster'
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css'
+import Station from '@/assets/imgs/station.png'
 
 let AMap, map
 
@@ -25,7 +26,7 @@ const addStations = () => {
           const { name, location: { lng, lat } } = station
           const marker = L.marker(new L.LatLng(lat, lng), {
             icon: L.icon({
-              iconUrl: '/station.png',
+              iconUrl: Station,
               iconSize: [40, 40]
             })
           })

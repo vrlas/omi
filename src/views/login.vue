@@ -1,13 +1,13 @@
 <script setup>
 import { useRouter } from 'vue-router'
-import { ref, onMounted, nextTick } from 'vue'
+import { ref, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
-import Icon from '@/components/Icon.vue'
 import Logo from '@/assets/logo.png'
 import {
   Refresh,
   CircleClose
 } from '@element-plus/icons-vue'
+import jobJson from '@/assets/lotties/job.json'
 
 const router = useRouter()
 const user = ref({username: '', password: ''})
@@ -109,7 +109,7 @@ onMounted(() => {
     <!-- 卡片 -->
     <div class="container w-[1200px] h-[700px] bg-white flex rounded-r-lg t-shadow cursor:shadow-lg">
       <div class="left flex-1 bg-blue-400 rounded-l-lg">
-        <Icon width="600px" />
+        <Icon :name="jobJson" type="lottie" :width="600" />
       </div>
       <div class="right w-[600px] flex t-center">
         <div class="w-[330px]">
@@ -148,7 +148,7 @@ onMounted(() => {
                   <img
                     v-show="showImg"
                     class="border-4 border-white rounded-full relative w-full h-full"
-                    :src="`https://sineava-omi.vercel.app/imgs/${imgs[random]}`"
+                    :src="`/imgs/${imgs[random]}`"
                     :style="`transform: rotate(${angle}deg)`"
                   />
                   <img v-show="showImg" class="t-abs-center w-full h-full" src="https://minio.tianai.cloud/public/static/captcha/images/axis.png" />
@@ -202,6 +202,10 @@ onMounted(() => {
       }
     }
   }
+}
+
+.i-home {
+  font-family: 'i-home';
 }
 
 @keyframes fade {

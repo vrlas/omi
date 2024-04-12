@@ -4,7 +4,8 @@ import Logo from '@/assets/logo.png'
 import { useRoute, useRouter, RouterView } from 'vue-router'
 import { flatArray } from '@/utils'
 import { menus } from '@/mock'
-import Back from '@/assets/svg/back.vue'
+import SourceCode from '@/components/SourceCode.vue'
+// import Back from '@/assets/svg/back.vue'
 
 const [route, router] = [useRoute(), useRouter()]
 const map = new Map([['edit', '编辑'], ['info', '详情']])
@@ -71,7 +72,7 @@ watch(route, () => {
             </el-menu>
           </div>
           <div class="logout absolute h-[40px] left-4 right-4 bottom-4 rounded text-sm logout flex justify-center items-center cursor-pointer bg-green-400 text-white" @click="logout">
-            <Back class="mr-2" />登出
+            <Icon name="back" class="mr-1" />登出
           </div>
         </div>
       </div>
@@ -88,7 +89,7 @@ watch(route, () => {
                 </el-breadcrumb-item>
               </template>
             </el-breadcrumb>
-            <source-code v-if="currentCode" :code="currentCode" />
+            <SourceCode v-if="currentCode" :code="currentCode" />
           </div>
           <div class="absolute top-[60px] left-2 right-2 bottom-2" :class="links.length ? 'top-16' : 'top-2'">
             <RouterView />
