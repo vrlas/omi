@@ -136,7 +136,7 @@ onMounted(() => {
               <el-input v-model="user.password" type="password" style="height: 40px" />
             </div>
             <div class="row mt-8 relative">
-              <el-button class="w-full p-5 cursor-pointer" :loading="loading" type="primary" @click="showValid">
+              <el-button class="w-full p-5 cursor-pointer" size="large" :loading="loading" type="primary" @click="showValid">
                 登录
               </el-button>
               <div v-if="show" class="absolute left-0 bottom-14 w-full h-[330px] rounded slider p-2 select-none" @mousemove="mousemove">

@@ -60,7 +60,7 @@ watch(route, () => {
       <div class="left py-2 pl-2 box-border w-[280px] select-none relative t-gray rounded">
         <div class="bg-white flex flex-col h-full rounded">
           <div class="flex-1 p-2">
-            <el-menu router :default-active="route.path.slice(1)" class="border-none menus">
+            <el-menu router :default-active="route.path.slice(1)" class="!border-none">
               <el-sub-menu v-for="item, i in menus" :key="i" :index="item.link">
                 <template #title>
                   {{ item.name }}

@@ -1,14 +1,17 @@
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import vue from '@vitejs/plugin-vue'
-import cesium from 'vite-plugin-cesium'
 import svg from 'vite-svg-loader'
 
 export default defineConfig({
   plugins: [
     vue(),
     svg(),
-    cesium()
+    AutoImport({ resolvers: [ElementPlusResolver()] }),
+    Components({ resolvers: [ElementPlusResolver()] })
   ],
   server: {
     proxy: {
