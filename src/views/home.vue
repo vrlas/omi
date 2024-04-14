@@ -5,7 +5,6 @@ import { useRoute, useRouter, RouterView } from 'vue-router'
 import { flatArray } from '@/utils'
 import { menus } from '@/mock'
 import SourceCode from '@/components/SourceCode.vue'
-// import Back from '@/assets/svg/back.vue'
 
 const [route, router] = [useRoute(), useRouter()]
 const map = new Map([['edit', '编辑'], ['info', '详情']])
@@ -26,9 +25,8 @@ watch(route, () => {
   const find = menus.find(item => item.link === stack[0])
   if (!find) return
   const match = flatArray([find])
-  let n = 0, bool = true
-  let real
-  while(match && stack.length) {
+  let n = 0, bool = true, real
+  while(stack.length) {
     const pop = stack.pop()
     if (n === 0 && [...map.keys()].includes(pop)) {
       real = { name: map.get(pop), path: route.path }
@@ -60,12 +58,12 @@ watch(route, () => {
       <div class="left py-2 pl-2 box-border w-[280px] select-none relative t-gray rounded">
         <div class="bg-white flex flex-col h-full rounded">
           <div class="flex-1 p-2">
-            <el-menu router :default-active="route.path.slice(1)" class="!border-none">
+            <el-menu router :default-active="route.path.slice(1)" class="!border-none" @select="index => router.push(`/${index}`)">
               <el-sub-menu v-for="item, i in menus" :key="i" :index="item.link">
                 <template #title>
                   {{ item.name }}
                 </template>
-                <el-menu-item v-for="{ name, link },j in item.children" :key="`${i}-${j}`" :index="link" @click="router.replace(`/${link}`)">
+                <el-menu-item v-for="{ name, link },j in item.children" :key="`${i}-${j}`" :index="link">
                   {{ name }}
                 </el-menu-item>
               </el-sub-menu>
