@@ -90,7 +90,7 @@ onMounted(() => {
         loading.value = false
         localStorage.setItem('user', JSON.stringify(user.value))
         localStorage.setItem('token', '123')
-        router.push('/home')
+        router.replace('/home')
       }, 2000)
     } else {
       left.value = 0

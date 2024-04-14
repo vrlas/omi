@@ -65,7 +65,7 @@ watch(route, () => {
                 <template #title>
                   {{ item.name }}
                 </template>
-                <el-menu-item v-for="{ name, link },j in item.children" :key="`${i}-${j}`" :index="link" @click="router.push(`/${link}`)">
+                <el-menu-item v-for="{ name, link },j in item.children" :key="`${i}-${j}`" :index="link" @click="router.replace(`/${link}`)">
                   {{ name }}
                 </el-menu-item>
               </el-sub-menu>

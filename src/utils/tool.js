@@ -1,14 +1,15 @@
 /** 主要用于处理表格等工具函数 */
-import * as XLSX from 'xlsx'
-import XLSXD from 'xlsx-style-vite'
-import FileSaver from 'file-saver'
+// import * as XLSX from 'xlsx'
+// import XLSXD from 'xlsx-style-vite'
+// import FileSaver from 'file-saver'
 
 /**
  * @param data 表格数据
  * @param title 表格名
  * @param { enable: 是否启用表格样式 }
  */
-const exportTable = (data, title = '表格.xlsx', config = { enable: false }) => {
+const exportTable = async (data, title = '表格.xlsx', config = { enable: false }) => {
+  const [XLSX, XLSXD, FileSaver] = await Promise.all([import('xlsx'), import('xlsx-style-vite'), import('file-saver')])
   const keys = Object.keys(data[0])
   data = data.map(item => {
     const ob = {}
@@ -77,7 +78,8 @@ const exportTable = (data, title = '表格.xlsx', config = { enable: false }) =>
   FileSaver.saveAs(blob, title)
 }
 
-const readExcel = (file, cb) => {
+const readExcel = async (file, cb) => {
+  const XLSX = await import('xlsx')
   const reader = new FileReader()
 	reader.readAsBinaryString(file)
 	reader.onload = function(e) {
