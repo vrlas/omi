@@ -19,7 +19,7 @@ const data = ref([])
 const generateTable = () => {
   exportTable(
     [head, ...data.value],
-    { type: String, default: '表格.xlsx' },
+    'Github近期推荐项目.xlsx',
     { enable: true, enableCenter: true, enableWidth: true, enableHeaderBackground: true }
   )
 }
