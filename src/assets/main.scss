@@ -7,6 +7,10 @@
 }
 
 @layer base {
+  body {
+    // 避免动画时页面出现滚动条影响体验
+    overflow: hidden;
+  }
   .t-center {
     @apply flex justify-center items-center;
   }

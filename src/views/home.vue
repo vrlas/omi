@@ -90,7 +90,16 @@ watch(route, () => {
             <SourceCode v-if="currentCode" :code="currentCode" />
           </div>
           <div class="absolute top-[60px] left-2 right-2 bottom-2" :class="links.length ? 'top-16' : 'top-2'">
-            <RouterView />
+            <!-- <div v-show="loading">
+              loading
+            </div> -->
+            <RouterView v-slot="{ Component }">
+              <Transition name="slide-fade">
+                <KeepAlive>
+                  <component :is="Component" />
+                </KeepAlive>
+              </Transition>
+            </RouterView>
           </div>
         </div>
       </div>
@@ -99,6 +108,15 @@ watch(route, () => {
 </template>
 
 <style lang="scss" scoped>
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-enter-from {
+  transform: translateY(20px);
+  opacity: 0;
+}
+
 .el-menu-item.is-active {
   @apply bg-blue-400 text-white box-content px-4 rounded;
 }

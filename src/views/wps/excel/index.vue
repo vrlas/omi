@@ -16,18 +16,11 @@ const fileRef = ref(null)
 const loading = ref(false)
 const head = { name: '项目', desc: '描述', language: '语言', stars: 'star数', forks: 'fork数' }
 const data = ref([])
-const props = defineProps({
-  name: { type: String, default: '表格.xlsx' },
-  config: {
-    type: Object,
-    default: () => ({ enable: false, enableCenter: false, enableWidth: false, enableHeaderBackground: false })
-  }
-})
 const generateTable = () => {
   exportTable(
     [head, ...data.value],
-    props.name,
-    props.config
+    { type: String, default: '表格.xlsx' },
+    { enable: true, enableCenter: true, enableWidth: true, enableHeaderBackground: true }
   )
 }
 const trigger = () => {

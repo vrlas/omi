@@ -59,7 +59,13 @@ const showValid = () => {
     ElMessage({ message: '请确认填写无误后再提交', type: 'warning' })
     return
   }
-  show.value = true
+  // 移动端暂时不做数字验证
+  if (document.body.classList.contains('is-mobile')) {
+    loading.value = true
+    setTimeout(toHome, 2000)
+  } else {
+    show.value = true
+  }
 }
 
 const refresh = () => {
@@ -77,30 +83,34 @@ const refresh = () => {
   }, 500)
 }
 
+const toHome = () => {
+  loading.value = false
+  localStorage.setItem('user', JSON.stringify(user.value))
+  localStorage.setItem('token', '123')
+  router.replace('/home')
+}
+
+const cancel = () => {
+  if (!draggable.value) return
+  draggable.value = false
+  res.value = (angle.value % 360 < 10 || angle.value % 360 > 350) ? 'success' : 'error'
+  // 范围区间都算验证成功
+  if (res.value === 'success') {
+    loading.value = true
+    setTimeout(toHome, 2000)
+  } else {
+    left.value = 0
+    refresh()
+  }
+  const timout = setTimeout(() => {
+    res.value = 'none'
+    clearTimeout(timout)
+  }, 2000)
+}
+
 onMounted(() => {
   // 鼠标放开取消拖拽
-  document.addEventListener('mouseup', () => {
-    if (!draggable.value) return
-    draggable.value = false
-    res.value = (angle.value % 360 < 10 || angle.value % 360 > 350) ? 'success' : 'error'
-    // 范围区间都算验证成功
-    if (res.value === 'success') {
-      loading.value = true
-      setTimeout(() => {
-        loading.value = false
-        localStorage.setItem('user', JSON.stringify(user.value))
-        localStorage.setItem('token', '123')
-        router.replace('/home')
-      }, 2000)
-    } else {
-      left.value = 0
-      refresh()
-    }
-    const timout = setTimeout(() => {
-      res.value = 'none'
-      clearTimeout(timout)
-    }, 2000)
-  })
+  document.addEventListener('mouseup', cancel)
 })
 </script>
 
@@ -111,12 +121,12 @@ onMounted(() => {
       <div class="left flex-1 bg-blue-400 rounded-l-lg">
         <Icon :name="jobJson" type="lottie" :width="600" />
       </div>
-      <div class="right w-[600px] flex t-center">
+      <div class="right w-1/2 flex t-center">
         <div class="w-[330px]">
-          <p class="text-slate-600 text-[20px]">
+          <p class="text-slate-600 text-[20px] center">
             欢迎使用
           </p>
-          <div class="flex gap-1 mt-4">
+          <div class="flex gap-1 mt-4 center">
             <img class="cursor-pointer" :src="Logo" />
             <p class="text-[32px] text-slate-600 font-bold">
               Omi物料库
@@ -191,15 +201,15 @@ onMounted(() => {
 // 手机端响应式
 .is-mobile {
   .container {
-    @apply w-screen h-screen;
+    @apply w-[screen] h-screen bg-white shadow-none rounded-none;
     .left {
       @apply hidden;
     }
     .right {
       @apply w-screen h-screen mx-auto flex flex-col items-center;
-      .row {
-        @apply w-screen px-10;
-      }
+    }
+    .center {
+      @apply justify-center text-center;
     }
   }
 }
