@@ -73,7 +73,7 @@ onBeforeMount(() => {
       <!-- <el-button class="guide-1" type="primary" @click="router.push(`${route.path}/edit`)">
         添加数据
       </el-button> -->
-      <el-button v-loading="downloadLoading" :disabled="downloadLoading" class="guide-1" type="primary" @click="generateTable">
+      <el-button :loading="downloadLoading" :disabled="downloadLoading" class="guide-1" type="primary" @click="generateTable">
         下载表格
       </el-button>
       <el-button class="guide-2" type="primary" @click="trigger">
