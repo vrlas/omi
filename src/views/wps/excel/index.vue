@@ -3,25 +3,21 @@ import { ref, onBeforeMount } from 'vue'
 import { exportTable, readExcel } from '@/utils/tool'
 import { driver } from 'driver.js'
 import 'driver.js/dist/driver.css'
-// import {
-//   Edit,
-//   View,
-//   Delete
-// } from '@element-plus/icons-vue'
-// import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 
-// const [route, router] = [useRoute(), useRouter()]
 const fileRef = ref(null)
 const loading = ref(false)
+const downloadLoading = ref(false)
 const head = { name: '项目', desc: '描述', language: '语言', stars: 'star数', forks: 'fork数' }
 const data = ref([])
 const generateTable = () => {
+  downloadLoading.value = true
   exportTable(
     [head, ...data.value],
     'Github近期推荐项目.xlsx',
     { enable: true, enableCenter: true, enableWidth: true, enableHeaderBackground: true }
   )
+  downloadLoading.value = false
 }
 const trigger = () => {
   fileRef.value.click()
@@ -77,7 +73,7 @@ onBeforeMount(() => {
       <!-- <el-button class="guide-1" type="primary" @click="router.push(`${route.path}/edit`)">
         添加数据
       </el-button> -->
-      <el-button class="guide-1" type="primary" @click="generateTable">
+      <el-button v-loading="downloadLoading" :disabled="downloadLoading" class="guide-1" type="primary" @click="generateTable">
         下载表格
       </el-button>
       <el-button class="guide-2" type="primary" @click="trigger">
