@@ -95,9 +95,9 @@ watch(route, () => {
             </div> -->
             <RouterView v-slot="{ Component }">
               <Transition name="slide-fade">
-                <KeepAlive>
-                  <component :is="Component" />
-                </KeepAlive>
+                <!-- <KeepAlive> -->
+                <component :is="Component" />
+                <!-- </KeepAlive> -->
               </Transition>
             </RouterView>
           </div>
