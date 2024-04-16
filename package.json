@@ -23,6 +23,7 @@
     "leaflet.chinatmsproviders": "^3.0.6",
     "leaflet.markercluster": "^1.5.3",
     "pinia": "^2.1.7",
+    "qrcode": "^1.5.3",
     "three": "^0.146.0",
     "vite-svg-loader": "^5.1.0",
     "vue": "^3.4.21",
