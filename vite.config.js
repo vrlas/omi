@@ -18,6 +18,10 @@ export default defineConfig({
       '/trending': {
         target: 'https://github.com/trending?since=monthly',
         changeOrigin: true
+      },
+      '/api': {
+        target: 'https://api-q206.onrender.com',
+        changeOrigin: true
       }
     }
   },
