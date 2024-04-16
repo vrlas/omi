@@ -1,5 +1,5 @@
-import status from './index'
+// import status from './index'
 
 export default function handler(req, res) {
-  return res.json({ status })
+  return res.json({ status: true })
 }
