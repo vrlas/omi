@@ -18,6 +18,7 @@ export const menus = [
     name: '其他',
     link: 'other',
     children: [
+      { name: '移动端', link: 'other/mobile', code: '/other/other/mobile.vue' },
       { name: '拓扑图', link: 'other/g6', code: '/other/g6/index.vue' },
       { name: 'cool', link: 'other/cool', code: '/other/cool/index.vue' }
     ]

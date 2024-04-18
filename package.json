@@ -24,6 +24,7 @@
     "pinia": "^2.1.7",
     "qrcode": "^1.5.3",
     "three": "^0.146.0",
+    "vant": "^4.8.11",
     "vite-svg-loader": "^5.1.0",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0",
@@ -33,6 +34,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.13.2",
+    "@vant/auto-import-resolver": "^1.1.0",
     "@vitejs/plugin-vue": "^5.0.4",
     "autoprefixer": "^10.4.19",
     "eslint": "^9.0.0",

@@ -6,6 +6,8 @@ const { name } = defineProps({
   name: { type: String, required: true },
   type: { type: String, defualt: 'svg' }, // 传入json表示为lottie
   width: { type: String, default: '24px' },
+  fill: String,
+  stroke: String,
   height: String
 })
 const icon = defineAsyncComponent(() => import(`../assets/svg/${name}.svg?component`))
@@ -16,7 +18,9 @@ const icon = defineAsyncComponent(() => import(`../assets/svg/${name}.svg?compon
     <Lottie :animation-data="name" :width="width" :height="height || width" />
   </template>
   <template v-else>
-    <component :is="icon" class="icon" />
+    <em class="icon" :class="[stroke && 'stroke', fill && 'fill']">
+      <component :is="icon" />
+    </em>
   </template>
 </template>
 
@@ -24,5 +28,11 @@ const icon = defineAsyncComponent(() => import(`../assets/svg/${name}.svg?compon
 .icon svg {
   width: v-bind(width);
   height: v-bind(width);
+}
+.fill.icon * {
+  fill: v-bind(fill);
+}
+.stroke.icon path {
+  stroke: v-bind(stroke);
 }
 </style>

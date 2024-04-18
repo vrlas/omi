@@ -3,10 +3,6 @@
     {
       "source": "/trending",
       "destination": "https://github.com/trending?since=monthly"
-    },
-    {
-      "source": "/qrcode/:path",
-      "destination": "https://api-q206.onrender.com/:path"
     }
   ]
 }
