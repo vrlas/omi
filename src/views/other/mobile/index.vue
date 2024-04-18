@@ -7,8 +7,8 @@ import QRCode from 'qrcode'
 const list = ref([])
 
 onMounted(async () => {
-  const path1 = await QRCode.toDataURL('https://material.omi-m.fun/preview/login')
-  const path2 = await QRCode.toDataURL('https://material.omi-m.fun/preview/duorou')
+  const path1 = await QRCode.toDataURL('https://material.omi-m.fun/#/preview/login')
+  const path2 = await QRCode.toDataURL('https://material.omi-m.fun/#/preview/duorou')
   list.value = [
     { img: login, path: path1 },
     { img: duorou, path: path2 }
