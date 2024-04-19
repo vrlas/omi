@@ -5,7 +5,7 @@ import { Vue3Lottie as Lottie } from 'vue3-lottie'
 const { name } = defineProps({
   name: { type: String, required: true },
   type: { type: String, defualt: 'svg' }, // 传入json表示为lottie
-  width: { type: String, default: '24px' },
+  width: { type: String, default: '16px' },
   fill: String,
   stroke: String,
   height: String

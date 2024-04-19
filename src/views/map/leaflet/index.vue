@@ -92,11 +92,11 @@ onMounted(initMap)
   <div id="leaflet-map" className="t-card w-full h-full t-gray rounded"></div>
 </template>
 
-<style lang="scss">
-#leaflet-map .leaflet-tile {
+<style lang="scss" scoped>
+:deep(#leaflet-map .leaflet-tile) {
   filter: hue-rotate(180deg);
 }
-.leaflet-popup-content-wrapper {
+:deep(.leaflet-popup-content-wrapper) {
   border: 4px dashed rgba(0,255,0,.4);
 }
 </style>

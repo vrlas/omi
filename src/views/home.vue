@@ -4,7 +4,6 @@ import Logo from '@/assets/logo.png'
 import { useRoute, useRouter, RouterView } from 'vue-router'
 import { flatArray } from '@/utils'
 import { menus } from '@/mock'
-import SourceCode from '@/components/SourceCode.vue'
 
 const [route, router] = [useRoute(), useRouter()]
 const map = new Map([['edit', '编辑'], ['info', '详情']])
@@ -76,7 +75,7 @@ watch(route, () => {
       </div>
       <div class="right t-gray box-content flex-1 flex flex-col p-2 relative">
         <div class="h-full">
-          <div v-if="links.length" class="t-card flex items-center justify-between">
+          <div v-if="links.length" class="t-card flex items-center justify-between py-4">
             <el-breadcrumb separator="/">
               <template v-for="{ name, link }, i in links" :key="i">
                 <el-breadcrumb-item v-if="i === 0 || i === links.length - 1">
@@ -87,17 +86,14 @@ watch(route, () => {
                 </el-breadcrumb-item>
               </template>
             </el-breadcrumb>
-            <SourceCode v-if="currentCode" :code="currentCode" />
+            <a v-show="currentCode" class="w-[20px] t-center p-2 absolute right-5 top-2 cursor-pointer code" :href="`https://github.com/sineava/omi/blob/master/src/views${currentCode}`" target="_blank">  
+              <Icon name="code" width="30px" />
+            </a>
           </div>
           <div class="absolute top-[60px] left-2 right-2 bottom-2" :class="links.length ? 'top-16' : 'top-2'">
-            <!-- <div v-show="loading">
-              loading
-            </div> -->
             <RouterView v-slot="{ Component }">
               <Transition name="slide-fade">
-                <!-- <KeepAlive> -->
                 <component :is="Component" />
-                <!-- </KeepAlive> -->
               </Transition>
             </RouterView>
           </div>
@@ -120,13 +116,16 @@ watch(route, () => {
 .el-menu-item.is-active {
   @apply bg-blue-400 text-white box-content px-4 rounded;
 }
-
-.logout>svg {
+:deep(.logout svg) {
   transition: transform 1s linear;
 }
-.logout:hover>svg {
+:deep(.logout:hover svg) {
   @apply -translate-x-1;
   transition: transform linear .4s;
+}
+
+:deep(.code:hover svg) {
+  @apply scale-110;
 }
 
 // 手机端响应式

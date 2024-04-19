@@ -10,17 +10,20 @@ onMounted(async () => {
   const path1 = await QRCode.toDataURL('https://material.omi-m.fun/#/preview/login')
   const path2 = await QRCode.toDataURL('https://material.omi-m.fun/#/preview/duorou')
   list.value = [
-    { img: login, path: path1 },
-    { img: duorou, path: path2 }
+    { img: login, path: path1, code: 'duorou/index.vue' },
+    { img: duorou, path: path2, code: 'login/index.vue' }
   ]
 })
 </script>
 
 <template>
   <div class="flex flex-wrap gap-4 h-full">
-    <div v-for="{ img, path },i in list" :key="i" class="container w-[356px] h-full relative cursor-pointer overflow-hidden bg-white">
+    <div v-for="{ img, path, code },i in list" :key="i" class="container w-[356px] h-full relative cursor-pointer overflow-hidden bg-white">
       <img class="h-full" :src="img" />
       <div class="absolute left-0 top-0 w-full h-full z-10 mask hidden">
+        <a class="w-[20px] t-center p-2 mx-auto mt-10 cursor-pointer code animate-bounce" :href="`https://github.com/sineava/omi/blob/master/src/views/preview/${code}`" target="_blank">  
+          <Icon name="code" width="60px" />
+        </a>
         <img class="absolute img w-[200px] opacity-100" :src="path" />
       </div>
     </div>
