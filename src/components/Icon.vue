@@ -18,7 +18,7 @@ const icon = defineAsyncComponent(() => import(`../assets/svg/${name}.svg?compon
     <Lottie :animation-data="name" :width="width" :height="height || width" />
   </template>
   <template v-else>
-    <em class="icon" :class="[stroke && 'stroke', fill && 'fill']">
+    <em class="icon" :class="{ fill }">
       <component :is="icon" />
     </em>
   </template>
@@ -31,8 +31,5 @@ const icon = defineAsyncComponent(() => import(`../assets/svg/${name}.svg?compon
 }
 .fill.icon * {
   fill: v-bind(fill);
-}
-.stroke.icon path {
-  stroke: v-bind(stroke);
 }
 </style>

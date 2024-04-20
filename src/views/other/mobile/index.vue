@@ -10,8 +10,8 @@ onMounted(async () => {
   const path1 = await QRCode.toDataURL('https://material.omi-m.fun/#/preview/login')
   const path2 = await QRCode.toDataURL('https://material.omi-m.fun/#/preview/duorou')
   list.value = [
-    { img: login, path: path1, code: 'duorou/index.vue' },
-    { img: duorou, path: path2, code: 'login/index.vue' }
+    { img: login, path: path1, code: 'login/index.vue' },
+    { img: duorou, path: path2, code: 'duorou/index.vue' }
   ]
 })
 </script>
