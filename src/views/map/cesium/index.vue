@@ -150,31 +150,29 @@ onMounted(initMap)
 
 <template>
   <div ref="mapRef" class="w-full h-full">
-    <template v-if="isInit">
-      <div ref="divGraphicRef" class="absolute -z-10 t-graphic">
-        <div class="absolute top-2 left-[128px] text-white font-bold text-sm">
-          1号观景点
+    <div ref="divGraphicRef" class="absolute -z-10 t-graphic">
+      <div class="absolute top-[4px] left-[122px] text-white font-bold text-sm">
+        1号观景点
+      </div>
+      <div class="absolute top-8 left-12 w-[140px] h-[120px] text-white text text-sm flex flex-col justify-evenly">
+        <div>
+          经度: <div class="inline-block px-2 ml-2 bg-green-600 rounded text-white" type="success">
+            104.325891
+          </div>
         </div>
-        <div class="absolute top-8 left-12 w-[140px] h-[120px] text-white text text-sm flex flex-col justify-evenly">
-          <div>
-            经度: <el-tag class="ml-2" type="primary" size="small">
-              104.325891
-            </el-tag>
+        <div>
+          纬度: <div class="inline-block px-2 ml-2 bg-green-600 rounded text-white" type="success">
+            30.594535
           </div>
-          <div>
-            纬度: <el-tag class="ml-2" type="primary" size="small">
-              30.594535
-            </el-tag>
-          </div>
-          <div>
-            高程: <el-tag class="ml-2" type="primary" size="small">
-              42.84m
-            </el-tag>
+        </div>
+        <div>
+          高程: <div class="inline-block px-2 ml-2 bg-green-600 rounded text-white" type="success">
+            42.84m
           </div>
         </div>
       </div>
-      <board :position="position" />
-    </template>
+    </div>
+    <board v-if="isInit" :position="position" />
   </div>
 </template>
 
