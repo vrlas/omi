@@ -18,7 +18,7 @@ import {
   EventHelper
 } from 'cesium'
 import 'cesium/Build/Cesium/Widgets/widgets.css'
-import { cesiumOption } from '@/utils/map'
+import { cesiumToken, cesiumOption } from '@/utils/map'
 import { ref, onMounted } from 'vue'
 import board from './board.vue'
 import buildingJSON from './building.json'
@@ -30,7 +30,7 @@ const position = ref({ ...lnglat })
 const [mapRef, divGraphicRef] = [ref(null), ref(null)]
 let viewer
 const initMap = async () => {
-  Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmNjJjMzY0OS1hZGQxLTRiZmYtYWYwNS03NmIyM2MwMDgwZDAiLCJpZCI6MTIzMTgsInNjb3BlcyI6WyJhc3IiLCJnYyJdLCJpYXQiOjE1NjA4NDQ3Mjd9.OLTL_rs2gAi2R9zoztBHcJPDHnVl2Q7OZxRtZhoCeZE'
+  Ion.defaultAccessToken = cesiumToken
   viewer = new Viewer(mapRef.value, {...cesiumOption, terrainProvider: await createWorldTerrainAsync()})
   viewer.cesiumWidget.creditContainer.style.display = 'none' // 隐藏logo版权
   viewer.scene.globe.depthTestAgainstTerrain = true

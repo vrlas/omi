@@ -1,10 +1,8 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
-import { ElMessage } from 'element-plus'
+import { ElNotification } from 'element-plus'
 import Logo from '@/assets/logo.png'
-import axios from 'axios'
-import QRCode from 'qrcode'
 import {
   Refresh,
   CircleClose
@@ -31,12 +29,9 @@ const offset = ref(100)
 const show = ref(null)
 const showImg = ref(true)
 const res = ref('none')
-const url = ref('')
-const showQrcode = ref(false)
-let interval
 
 const valid = () => {
-  return user.value.username && user.value.password
+  return user.value.username && user.value.password && user.value.username === 'admin' && user.value.password === '123456'
 }
 
 const mousedown = () => {
@@ -61,7 +56,7 @@ const mousemove = e => {
 
 const showValid = () => {
   if (!valid()) {
-    ElMessage({ message: '请确认填写无误后再提交', type: 'warning' })
+    ElNotification({ title: 'Warning', message: '请确认填写无误后再提交', type: 'warning' })
     return
   }
   // 移动端暂时不做数字验证
@@ -113,27 +108,8 @@ const cancel = () => {
   }, 2000)
 }
 
-const loop = () => {
-  axios.get('https://api-q206.onrender.com/status').then(res => {
-    if (res.data.status) {
-      clearInterval(interval)
-      toHome()
-      axios.get('https://api-q206.onrender.com/change?status=false')
-    }
-  })
-}
-
-const scan = async () => {
-  showQrcode.value = !showQrcode.value
-  if (showQrcode.value) {
-    interval = setInterval(loop, 2000)
-  } else {
-    clearInterval(interval)
-  }
-}
-
 onMounted(async () => {
-  url.value = await QRCode.toDataURL('https://api-q206.onrender.com/change?status=true')
+  document.addEventListener('keydown', ({ keyCode }) => keyCode === 13 && showValid())
   // 鼠标放开取消拖拽
   document.addEventListener('mouseup', cancel)
 })
@@ -162,16 +138,16 @@ onMounted(async () => {
               <p class="mb-1 text-sm">
                 用户名：
               </p>
-              <el-input v-model="user.username" style="height: 40px;width: 100%;" />
+              <el-input v-model="user.username" style="height: 40px;width: 100%;" placeholder="测试账户: admin" />
             </div>
             <div class="row flex flex-col mt-8">
               <p class="mb-1 text-sm">
                 密码：
               </p>
-              <el-input v-model="user.password" type="password" style="height: 40px" />
+              <el-input v-model="user.password" type="password" style="height: 40px" placeholder="测试密码: 123456" />
             </div>
             <div class="row mt-8 relative">
-              <el-button class="w-full p-5 cursor-pointer" size="large" :loading="loading" type="primary" @click="showValid">
+              <el-button class="w-full p-5 cursor-pointer" size="large" :loading="loading" type="primary" @click.enter="showValid">
                 登录
               </el-button>
               <div v-if="show" class="absolute left-0 bottom-14 w-full h-[330px] rounded slider p-2 select-none" @mousemove="mousemove">
@@ -205,19 +181,6 @@ onMounted(async () => {
               </div>
             </div>
           </el-form>
-          <p class="text-slate-500 text-sm text-center mt-8 mb-2">
-            --- 其他方式登录 ---
-          </p>
-          <el-popover placement="top" trigger="click" :width="100" @click="scan">
-            <img className="w-full" :src="url" />
-            <template #reference>
-              <div class="flex justify-center">
-                <a href="#" class="border-b border-dashed border-blue-500" @click="scan">
-                  扫码登录
-                </a>
-              </div>
-            </template>
-          </el-popover>
         </div>
       </div>
     </div>

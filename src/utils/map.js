@@ -1,5 +1,7 @@
+const cesiumToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIwMzI3MmJkYy00ZWViLTRmODAtYjY4NS1lNzgxNzYwOTZlNWUiLCJpZCI6ODc4OTEsImlhdCI6MTY0ODc3NzIwNH0.pS37i26Iuwri5pjc1GLR41xyRno20JBcWSiXs-p0bK8'
+
 // cesium配置项
-export const cesiumOption = {
+const cesiumOption = {
   geocoder: false, //搜索框
   homeButton: false, //home按钮
   sceneModePicker: false, //3d/2d 模式切换按钮
@@ -17,7 +19,7 @@ export const cesiumOption = {
  * 路径解析
  * @param route result.routes[0]
  */
-export const parseRouteToPath = route => {
+const parseRouteToPath = route => {
   let path = []
   for (let i = 0, l = route.steps.length; i < l; i++) {
     let step = route.steps[i]
@@ -26,4 +28,10 @@ export const parseRouteToPath = route => {
     }
   }
   return path
+}
+
+export {
+  cesiumToken,
+  cesiumOption,
+  parseRouteToPath
 }
